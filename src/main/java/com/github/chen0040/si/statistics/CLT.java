@@ -20,7 +20,7 @@ public class CLT {
    // CLT hold for proportion if
    // 1.
    // * observations int the samples are randomly sampled or assigned
-   // * if sampled without replacement, the sample size should be less than 10% of the true population size
+   // * if sampling without replacement, the sample size should be less than 10% of the true population size
    // 2
    // * success-count >= 10 and failure-count >= 10 in each sample
    // * success-count and failure-count should be larger if the true population is skewed in distribution
@@ -33,7 +33,7 @@ public class CLT {
       }
 
       int n = sample.size(groupId);
-      // if sampled without replacement, then the sample size must be smaller than 10% of the true population under study
+      // if sampling without replacement, then the sample size must be smaller than 10% of the true population under study
       if(sample.isSampledWithReplacement() && n >= sample.getTruePopulationSize() * 10 / 100){
          logger.warn("if sampled without replacement, then the sample size must be smaller than 10% of the true population under study");
          return false;
@@ -44,8 +44,9 @@ public class CLT {
          throw new VariableWrongValueTypeException("Only CTL for proportion works for categorical variable");
       }
 
-      int successCount = (int)(sample.proportion(successLabel, groupId) * n);
-      int failureCount = n - successCount;
+      double p = sample.proportion(successLabel, groupId);
+      int successCount = (int)(p * n);
+      int failureCount = (int)((1-p) * n);
 
       return successCount >= 10 && failureCount >= 10;
    }
@@ -53,7 +54,7 @@ public class CLT {
    // CLT hold for sample mean if
    // 1.
    // * observations int the samples are randomly sampled or assigned
-   // * if sampled without replacement, the sample size should be less than 10% of the true population size
+   // * if sampling without replacement, the sample size should be less than 10% of the true population size
    // 2
    // * sample size >= 30 in each sample
    // * sample size should be larger if the true population is skewed in distribution
@@ -66,7 +67,7 @@ public class CLT {
       }
 
       int n = sample.size(groupId);
-      // if sampled without replacement, then the sample size must be smaller than 10% of the true population under study
+      // if sampling without replacement, then the sample size must be smaller than 10% of the true population under study
       if(sample.isSampledWithReplacement() && n >= sample.getTruePopulationSize() * 10 / 100){
          logger.warn("if sampled without replacement, then the sample size must be smaller than 10% of the true population under study");
          return false;

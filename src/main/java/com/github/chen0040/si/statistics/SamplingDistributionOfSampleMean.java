@@ -4,6 +4,7 @@ package com.github.chen0040.si.statistics;
 import com.github.chen0040.si.enums.DistributionFamily;
 import com.github.chen0040.si.exceptions.VariableWrongValueTypeException;
 import org.apache.commons.math3.distribution.NormalDistribution;
+import org.apache.commons.math3.distribution.TDistribution;
 import org.apache.commons.math3.exception.OutOfRangeException;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -15,13 +16,12 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  */
 public class SamplingDistributionOfSampleMean {
 
-   // the sample statistics
-   private final double sampleMean;
-
+   // the point estimate of sample mean x_bar
+   private final double sampleMeanPointEstimate;
 
    private final int sampleSize;
 
-   // standard deviation, which could be population standard deviation sigma or sample stand deviation s_bar
+   // standard deviation of x, which could be population standard deviation sigma or sample stand deviation s_bar
    private final double sd;
 
    // the standard deviation of the sampling distribution of sample means
@@ -45,7 +45,7 @@ public class SamplingDistributionOfSampleMean {
       if(sampleDistribution.isCategorical()){
          throw new VariableWrongValueTypeException("Sampling distribution of sample means are not defined for categorical variable");
       }
-      this.sampleMean = sampleDistribution.getSampleMean();
+      this.sampleMeanPointEstimate = sampleDistribution.getSampleMean();
       this.sd = sampleDistribution.getSampleSd();
       this.sampleSize = sampleDistribution.getSampleSize();
       this.standardError = calculateStandardError(sd, sampleSize);
@@ -67,8 +67,8 @@ public class SamplingDistributionOfSampleMean {
    //       SE is the standard error (which is the standard deviation of the sampling distribution)
    //       sigma is the population standard deviation (can be estimated by the sample standard deviation s_bar)
    //       n is the sample size
-   public SamplingDistributionOfSampleMean(double sampleMean, int sampleSize, double sd, String groupId) {
-      this.sampleMean = sampleMean;
+   public SamplingDistributionOfSampleMean(double sampleMeanPointEstimate, int sampleSize, double sd, String groupId) {
+      this.sampleMeanPointEstimate = sampleMeanPointEstimate;
       this.sampleSize = sampleSize;
       this.sd = sd;
       this.standardError = calculateStandardError(sd, sampleSize);
@@ -87,8 +87,8 @@ public class SamplingDistributionOfSampleMean {
       return sd / Math.sqrt(sampleSize);
    }
 
-   public double getSampleMean() {
-      return sampleMean;
+   public double getSampleMeanPointEstimate() {
+      return sampleMeanPointEstimate;
    }
 
    public double getStandardError() {
@@ -103,15 +103,21 @@ public class SamplingDistributionOfSampleMean {
       if(confidenceLevel < 0 || confidenceLevel > 1) {
          throw new OutOfRangeException(confidenceLevel, 0, 1);
       }
+      double x_bar = sampleMeanPointEstimate;
+
       if(distributionFamily == DistributionFamily.Normal) {
-         NormalDistribution distribution = new NormalDistribution(sampleMean, standardError);
+         NormalDistribution distribution = new NormalDistribution(0, 1);
          double p_lo = (1.0 - confidenceLevel) / 2;
          double p_hi = 1.0 - p_lo;
-         double q_hi = distribution.inverseCumulativeProbability(p_hi);
-         double q_lo = distribution.inverseCumulativeProbability(p_lo);
-         return new Interval(q_lo, q_hi);
+         double Z = distribution.inverseCumulativeProbability(p_hi);
+
+         return new Interval(x_bar - Z * standardError, x_bar + Z * standardError);
       } else if(distributionFamily == DistributionFamily.StudentT) {
-         throw new NotImplementedException();
+         TDistribution distribution = new TDistribution(df);
+         double p_lo = (1.0 - confidenceLevel) / 2;
+         double p_hi = 1.0 - p_lo;
+         double t_df = distribution.inverseCumulativeProbability(p_hi);
+         return new Interval(x_bar - t_df * standardError, x_bar + t_df * standardError);
       } else {
          throw new NotImplementedException();
       }

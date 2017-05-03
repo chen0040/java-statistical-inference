@@ -33,7 +33,7 @@ public class SamplingDistributionOfSampleProportion {
       this.sampleProportion = p;
       this.sampleSize = sampleDistribution.getSampleSize();
 
-      this.standardError = calculateStandardError(p);
+      this.standardError = calculateStandardError(p, this.sampleSize);
 
       int successCount = (int)(this.sampleSize * p);
       int failureCount = (int)(this.sampleSize * (1-p));
@@ -52,7 +52,7 @@ public class SamplingDistributionOfSampleProportion {
       this.sampleProportion = p;
       this.sampleSize = sampleSize;
 
-      this.standardError = calculateStandardError(p);
+      this.standardError = calculateStandardError(p, sampleSize);
 
       int successCount = (int)(this.sampleSize * p);
       int failureCount = (int)(this.sampleSize * (1-p));
@@ -66,8 +66,8 @@ public class SamplingDistributionOfSampleProportion {
       this.groupId = groupId;
    }
 
-   private double calculateStandardError(double p) {
-      return p * (1 - p);
+   private double calculateStandardError(double p, int sampleSize) {
+      return Math.sqrt(p * (1 - p) / sampleSize);
    }
 
    public double getSampleProportion() {

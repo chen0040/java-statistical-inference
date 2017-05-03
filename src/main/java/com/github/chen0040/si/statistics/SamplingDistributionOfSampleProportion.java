@@ -1,6 +1,7 @@
 package com.github.chen0040.si.statistics;
 
 
+import com.github.chen0040.si.enums.DistributionFamily;
 import com.github.chen0040.si.exceptions.VariableWrongValueTypeException;
 
 
@@ -16,8 +17,12 @@ public class SamplingDistributionOfSampleProportion {
 
    private final int sampleSize;
 
+   private final DistributionFamily distributionFamily;
 
+   // the standard deviation of the sampling distribution of sample proportions
    private final double standardError;
+
+   private final String groupId;
 
    public SamplingDistributionOfSampleProportion(SampleDistribution sampleDistribution) {
       if(!sampleDistribution.isNumeric()) {
@@ -29,15 +34,36 @@ public class SamplingDistributionOfSampleProportion {
       this.sampleSize = sampleDistribution.getSampleSize();
 
       this.standardError = calculateStandardError(p);
+
+      int successCount = (int)(this.sampleSize * p);
+      int failureCount = (int)(this.sampleSize * (1-p));
+
+      if(successCount < 10 || failureCount < 10) {
+         distributionFamily = DistributionFamily.StudentT;
+      } else {
+         distributionFamily = DistributionFamily.Normal;
+      }
+      this.groupId = sampleDistribution.getGroupId();
    }
 
-   public SamplingDistributionOfSampleProportion(double sampleProportion, int sampleSize) {
+   public SamplingDistributionOfSampleProportion(double p, int sampleSize, String groupId) {
 
 
-      this.sampleProportion = sampleProportion;
+      this.sampleProportion = p;
       this.sampleSize = sampleSize;
 
-      this.standardError = calculateStandardError(sampleProportion);
+      this.standardError = calculateStandardError(p);
+
+      int successCount = (int)(this.sampleSize * p);
+      int failureCount = (int)(this.sampleSize * (1-p));
+
+      if(successCount < 10 || failureCount < 10) {
+         distributionFamily = DistributionFamily.StudentT;
+      } else {
+         distributionFamily = DistributionFamily.Normal;
+      }
+
+      this.groupId = groupId;
    }
 
    private double calculateStandardError(double p) {

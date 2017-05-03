@@ -43,12 +43,12 @@ public class SampleDistribution {
       isNumeric = true;
 
       sampleMean = sample.getObservations().stream()
-              .filter(o -> groupId == null || o.getGroupId().equals(groupId))
+              .filter(o -> groupId == null || groupId.equals(o.getGroupId()))
               .map(Observation::getNumericValue)
               .reduce((a, b) -> a + b).get() / sample.size(groupId);
 
       sampleVariance = sample.getObservations().stream()
-              .filter(o -> groupId == null || o.getGroupId().equals(groupId))
+              .filter(o -> groupId == null || groupId.equals(o.getGroupId()))
               .map(o -> Math.pow(o.getNumericValue() - sampleMean, 2.0))
               .reduce((a, b) -> a + b).get() / (sample.size(groupId)-1);
 

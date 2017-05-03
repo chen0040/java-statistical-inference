@@ -1,6 +1,10 @@
 package com.github.chen0040.si.statistics;
 
 
+import com.github.chen0040.si.exceptions.VariableMixedValueTypeException;
+import com.github.chen0040.si.exceptions.NoObservationFoundException;
+import com.github.chen0040.si.exceptions.VariableWrongValueTypeException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,11 +17,17 @@ public class Sample {
    private final List<Observation> observations = new ArrayList<>();
    private Optional<Boolean> isNumeric = Optional.empty();
 
+
+   private boolean randomlySampledOrAssigned = true;
+   private boolean sampledWithReplacement = true;
+   // true population size, usually unknown and only used when sampled without replacement
+   private int truePopulationSize = -1;
+
    public void add(Observation observation) {
       if(isNumeric.isPresent()){
          boolean numericOnly = isNumeric.get();
          if(observation.isNumeric() != numericOnly) {
-            throw new RuntimeException("sample should only contain ".concat(numericOnly ? "numeric" : "categorical").concat(" values"));
+            throw new VariableMixedValueTypeException("sample should only contain ".concat(numericOnly ? "numeric" : "categorical").concat(" values"));
          }
       } else {
          isNumeric = Optional.of(observation.isNumeric());
@@ -28,13 +38,17 @@ public class Sample {
 
    public boolean isNumeric(){
       if(!isNumeric.isPresent()){
-         throw new RuntimeException("No observation is found in the sample");
+         throw new NoObservationFoundException("No observation is found in the sample");
       }
       return isNumeric.get();
    }
 
-   public int size() {
-      return observations.size();
+   public boolean isCategorical() {
+      return !isNumeric();
+   }
+
+   public int size(String groupId) {
+      return (int)observations.stream().filter(o -> groupId == null || groupId.equals(o.getGroupId())).count();
    }
 
    public Observation get(int index) {
@@ -42,49 +56,37 @@ public class Sample {
    }
 
 
-   // compute the sample mean
-   public double mean() {
-      if(!isNumeric()){
-         throw new RuntimeException("Mean can only be calculated on numeric variables");
-      }
-
-      return observations.stream().map(Observation::getNumericValue).reduce((a, b) -> a + b).get() / observations.size();
-   }
-
-   public double binomialMean(String successLabel) {
-
-      if(!isBinomial()){
-        throw new RuntimeException("Binomial mean can only be calculated on data for which variable has two categorical values");
-      }
-      if(!observations.stream().anyMatch(o -> o.getCategoricalValue().equals(successLabel))){
-         throw new RuntimeException("Success label ".concat(successLabel).concat(" is not found in the sample data"));
-      }
-      return size() * proportion(successLabel);
-   }
-
-   public double proportion(String successLabel) {
+   public double proportion(String successLabel, String groupId) {
       if(isNumeric()) {
-         throw new RuntimeException("proportional can only be calculated on categorical variables");
+         throw new VariableWrongValueTypeException("proportional can only be calculated on categorical variables");
       }
-      return (double)observations.stream().filter(o -> o.getCategoricalValue().equals(successLabel)).count() / size();
+      return (double)observations.stream()
+              .filter(o -> groupId == null || groupId.equals(o.getGroupId()))
+              .filter(o -> o.getCategoricalValue().equals(successLabel)).count() / size(groupId);
    }
 
-   private boolean isBinomial() {
-      return observations.stream().map(Observation::getCategoricalValue).distinct().count() == 2;
+
+   public List<Observation> getObservations() {
+      return observations;
    }
 
-   // compute the sample standard deviation
-   public double sd() {
-      if(!isNumeric()) {
-         throw new RuntimeException("Standard deviation can only be calculated on numeric variables");
-      }
-
-      final double sampleMean = mean();
-      if(size() == 1) {
-         return 0;
-      }
-
-      return Math.sqrt(observations.stream().map(o -> Math.pow(o.getNumericValue() - sampleMean, 2.0)).reduce((a, b) -> a + b).get() / (size()-1));
+   public long groups(){
+      return observations.stream().map(Observation::getGroupId).distinct().count();
    }
 
+   public boolean isRandomlySampledOrAssigned() {
+      return randomlySampledOrAssigned;
+   }
+
+   public boolean isSampledWithReplacement(){
+      return sampledWithReplacement;
+   }
+
+   public int getTruePopulationSize(){
+      return truePopulationSize;
+   }
+
+   public void setTruePopulationSize(int truePopulationSize) {
+      this.truePopulationSize = truePopulationSize;
+   }
 }

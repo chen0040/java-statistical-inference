@@ -16,4 +16,9 @@ public class Interval {
       this.lo = lo;
       this.hi = hi;
    }
+
+   @Override
+   public String toString(){
+      return "(" + lo + ", " + hi + ")";
+   }
 }

@@ -16,7 +16,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 @Setter
 public class SampleDistribution {
 
-   private double sampleMean;
+   private double sampleMeanPointEstimate;
    private double sampleSd;
    private double sampleVariance;
    private boolean isNumeric;
@@ -24,7 +24,7 @@ public class SampleDistribution {
 
    @Getter(AccessLevel.NONE)
    @Setter(AccessLevel.NONE)
-   private double proportion;
+   private double proportionPointEstimate;
 
    @Getter(AccessLevel.NONE)
    @Setter(AccessLevel.NONE)
@@ -42,14 +42,14 @@ public class SampleDistribution {
 
       isNumeric = true;
 
-      sampleMean = sample.getObservations().stream()
+      sampleMeanPointEstimate = sample.getObservations().stream()
               .filter(o -> groupId == null || groupId.equals(o.getGroupId()))
               .map(Observation::getNumericValue)
               .reduce((a, b) -> a + b).get() / sample.size(groupId);
 
       sampleVariance = sample.getObservations().stream()
               .filter(o -> groupId == null || groupId.equals(o.getGroupId()))
-              .map(o -> Math.pow(o.getNumericValue() - sampleMean, 2.0))
+              .map(o -> Math.pow(o.getNumericValue() - sampleMeanPointEstimate, 2.0))
               .reduce((a, b) -> a + b).get() / (sample.size(groupId)-1);
 
       sampleSd = Math.sqrt(sampleVariance);
@@ -66,10 +66,10 @@ public class SampleDistribution {
 
       isNumeric = false;
 
-      sampleMean = sample.size(groupId) * sample.proportion(successLabel, groupId);
+      sampleMeanPointEstimate = sample.size(groupId) * sample.proportion(successLabel, groupId);
 
-      this.proportion = sample.proportion(successLabel, groupId);
-      sampleVariance =  sample.size(groupId) * this.proportion * (1-this.proportion);
+      this.proportionPointEstimate = sample.proportion(successLabel, groupId);
+      sampleVariance =  sample.size(groupId) * this.proportionPointEstimate * (1-this.proportionPointEstimate);
 
       sampleSd = Math.sqrt(sampleVariance);
 
@@ -78,15 +78,15 @@ public class SampleDistribution {
       this.successLabel = successLabel;
    }
 
-   public double getProportion(){
+   public double getProportionPointEstimate(){
       if(isNumeric()){
          throw new NotImplementedException();
       }
-      return proportion;
+      return proportionPointEstimate;
    }
 
-   public void setProportion(double p) {
-      proportion = p;
+   public void setProportionPointEstimate(double p) {
+      proportionPointEstimate = p;
    }
 
    public String getSuccessLabel(){

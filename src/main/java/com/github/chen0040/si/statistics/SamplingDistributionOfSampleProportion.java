@@ -3,6 +3,10 @@ package com.github.chen0040.si.statistics;
 
 import com.github.chen0040.si.enums.DistributionFamily;
 import com.github.chen0040.si.exceptions.VariableWrongValueTypeException;
+import org.apache.commons.math3.distribution.NormalDistribution;
+import org.apache.commons.math3.distribution.TDistribution;
+import org.apache.commons.math3.exception.OutOfRangeException;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
 /**
@@ -12,8 +16,8 @@ import com.github.chen0040.si.exceptions.VariableWrongValueTypeException;
  */
 public class SamplingDistributionOfSampleProportion {
 
-   // the sample statistics
-   private final double sampleProportion;
+   // point estimate of the sample proportion p_bar
+   private final double sampleProportionPointEstimate;
 
    private final int sampleSize;
 
@@ -24,14 +28,19 @@ public class SamplingDistributionOfSampleProportion {
 
    private final String groupId;
 
+   // degrees of freedom of p_bar
+   private final double df;
+
    public SamplingDistributionOfSampleProportion(SampleDistribution sampleDistribution) {
       if(!sampleDistribution.isNumeric()) {
          throw new VariableWrongValueTypeException("Sampling distribution for sample proportions is not defined for numeric variable");
       }
 
-      double p = sampleDistribution.getProportion();
-      this.sampleProportion = p;
+      double p = sampleDistribution.getProportionPointEstimate();
+      this.sampleProportionPointEstimate = p;
       this.sampleSize = sampleDistribution.getSampleSize();
+
+      this.df = sampleSize - 1;
 
       this.standardError = calculateStandardError(p, this.sampleSize);
 
@@ -49,8 +58,10 @@ public class SamplingDistributionOfSampleProportion {
    public SamplingDistributionOfSampleProportion(double p, int sampleSize, String groupId) {
 
 
-      this.sampleProportion = p;
+      this.sampleProportionPointEstimate = p;
       this.sampleSize = sampleSize;
+
+      this.df = sampleSize - 1;
 
       this.standardError = calculateStandardError(p, sampleSize);
 
@@ -70,8 +81,8 @@ public class SamplingDistributionOfSampleProportion {
       return Math.sqrt(p * (1 - p) / sampleSize);
    }
 
-   public double getSampleProportion() {
-      return sampleProportion;
+   public double getSampleProportionPointEstimate() {
+      return sampleProportionPointEstimate;
    }
 
    public double getStandardError() {
@@ -80,5 +91,29 @@ public class SamplingDistributionOfSampleProportion {
 
    public int getSampleSize(){
       return sampleSize;
+   }
+
+   public Interval confidenceInterval(double confidenceLevel) {
+      if(confidenceLevel < 0 || confidenceLevel > 1) {
+         throw new OutOfRangeException(confidenceLevel, 0, 1);
+      }
+      double p_bar = sampleProportionPointEstimate;
+
+      if(distributionFamily == DistributionFamily.Normal) {
+         NormalDistribution distribution = new NormalDistribution(0, 1);
+         double p_lo = (1.0 - confidenceLevel) / 2;
+         double p_hi = 1.0 - p_lo;
+         double Z = distribution.inverseCumulativeProbability(p_hi);
+
+         return new Interval(p_bar - Z * standardError, p_bar + Z * standardError);
+      } else if(distributionFamily == DistributionFamily.StudentT) {
+         TDistribution distribution = new TDistribution(df);
+         double p_lo = (1.0 - confidenceLevel) / 2;
+         double p_hi = 1.0 - p_lo;
+         double t_df = distribution.inverseCumulativeProbability(p_hi);
+         return new Interval(p_bar - t_df * standardError, p_bar + t_df * standardError);
+      } else {
+         throw new NotImplementedException();
+      }
    }
 }

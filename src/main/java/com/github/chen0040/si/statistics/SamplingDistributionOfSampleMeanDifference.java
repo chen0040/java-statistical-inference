@@ -22,7 +22,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  */
 public class SamplingDistributionOfSampleMeanDifference {
    // point estimate of sample mean x_bar_1
-   private final double sampleMean1PointEsimate;
+   private final double sampleMean1PointEstimate;
 
    // point estimate of sample mean x_bar_2
    private final double sampleMean2PointEstimate;
@@ -40,7 +40,7 @@ public class SamplingDistributionOfSampleMeanDifference {
    // the standard deviation of the sampling distribution of sample means
    private final double standardError;
 
-   // degrees of freedom of x_bar_1
+   // degrees of freedom of x_bar_1 - x_bar_2
    private final double df;
 
    private final DistributionFamily distributionFamily;
@@ -59,8 +59,8 @@ public class SamplingDistributionOfSampleMeanDifference {
       if(sampleDistribution1.isCategorical()){
          throw new VariableWrongValueTypeException("Sampling distribution of sample means are not defined for categorical variable");
       }
-      this.sampleMean1PointEsimate = sampleDistribution1.getSampleMean();
-      this.sampleMean2PointEstimate = sampleDistribution2.getSampleMean();
+      this.sampleMean1PointEstimate = sampleDistribution1.getSampleMeanPointEstimate();
+      this.sampleMean2PointEstimate = sampleDistribution2.getSampleMeanPointEstimate();
 
       this.sd1 = sampleDistribution1.getSampleSd();
       this.sd2 = sampleDistribution2.getSampleSd();
@@ -88,8 +88,8 @@ public class SamplingDistributionOfSampleMeanDifference {
    //       SE is the standard error (which is the standard deviation of the sampling distribution)
    //       sigma is the population standard deviation (can be estimated by the sample standard deviation s_bar)
    //       n is the sample size
-   public SamplingDistributionOfSampleMeanDifference(double sampleMean1PointEsimate, double sampleMean2PointEstimate, int sampleSize1, int sampleSize2, double sd1, double sd2, String groupId1, String groupId2) {
-      this.sampleMean1PointEsimate = sampleMean1PointEsimate;
+   public SamplingDistributionOfSampleMeanDifference(double sampleMean1PointEstimate, double sampleMean2PointEstimate, int sampleSize1, int sampleSize2, double sd1, double sd2, String groupId1, String groupId2) {
+      this.sampleMean1PointEstimate = sampleMean1PointEstimate;
       this.sampleMean2PointEstimate = sampleMean2PointEstimate;
 
       this.sampleSize1 = sampleSize1;
@@ -116,8 +116,8 @@ public class SamplingDistributionOfSampleMeanDifference {
       return Math.sqrt(sd1 * sd1 / sampleSize1 + sd2 * sd2 / sampleSize2);
    }
 
-   public double getSampleMean1PointEsimate() {
-      return sampleMean1PointEsimate;
+   public double getSampleMean1PointEstimate() {
+      return sampleMean1PointEstimate;
    }
 
    public double getSampleMean2PointEstimate(){
@@ -125,7 +125,7 @@ public class SamplingDistributionOfSampleMeanDifference {
    }
 
    public double getSampleMeanDifferencePointEstimate(){
-      return sampleMean1PointEsimate - sampleMean2PointEstimate;
+      return sampleMean1PointEstimate - sampleMean2PointEstimate;
    }
 
    public double getStandardError() {
@@ -144,7 +144,7 @@ public class SamplingDistributionOfSampleMeanDifference {
       if(confidenceLevel < 0 || confidenceLevel > 1) {
          throw new OutOfRangeException(confidenceLevel, 0, 1);
       }
-      double dx_bar = sampleMean1PointEsimate - sampleMean2PointEstimate;
+      double dx_bar = sampleMean1PointEstimate - sampleMean2PointEstimate;
 
       if(distributionFamily == DistributionFamily.Normal) {
          NormalDistribution distribution = new NormalDistribution(0, 1);

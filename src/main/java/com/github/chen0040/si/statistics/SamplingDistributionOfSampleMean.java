@@ -27,7 +27,7 @@ public class SamplingDistributionOfSampleMean {
    // the standard deviation of the sampling distribution of sample means
    private final double standardError;
 
-   // degrees of freedom
+   // degrees of freedom of x_bar
    private final double df;
 
    private final DistributionFamily distributionFamily;
@@ -45,7 +45,7 @@ public class SamplingDistributionOfSampleMean {
       if(sampleDistribution.isCategorical()){
          throw new VariableWrongValueTypeException("Sampling distribution of sample means are not defined for categorical variable");
       }
-      this.sampleMeanPointEstimate = sampleDistribution.getSampleMean();
+      this.sampleMeanPointEstimate = sampleDistribution.getSampleMeanPointEstimate();
       this.sd = sampleDistribution.getSampleSd();
       this.sampleSize = sampleDistribution.getSampleSize();
       this.standardError = calculateStandardError(sd, sampleSize);

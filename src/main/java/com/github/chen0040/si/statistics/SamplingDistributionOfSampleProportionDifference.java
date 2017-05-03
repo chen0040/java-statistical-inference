@@ -46,8 +46,8 @@ public class SamplingDistributionOfSampleProportionDifference {
          throw new VariableWrongValueTypeException("Sampling distribution for sample proportions is not defined for numeric variable");
       }
 
-      double p1 = sampleDistribution1.getProportionPointEstimate();
-      double p2 = sampleDistribution2.getProportionPointEstimate();
+      double p1 = sampleDistribution1.getProportion();
+      double p2 = sampleDistribution2.getProportion();
 
       this.sampleProportion1PointEstimate = p1;
       this.sampleProportion2PointEstimate = p2;

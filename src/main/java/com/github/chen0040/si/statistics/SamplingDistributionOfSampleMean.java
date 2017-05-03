@@ -45,7 +45,7 @@ public class SamplingDistributionOfSampleMean {
       if(sampleDistribution.isCategorical()){
          throw new VariableWrongValueTypeException("Sampling distribution of sample means are not defined for categorical variable");
       }
-      this.sampleMeanPointEstimate = sampleDistribution.getSampleMeanPointEstimate();
+      this.sampleMeanPointEstimate = sampleDistribution.getSampleMean();
       this.sd = sampleDistribution.getSampleSd();
       this.sampleSize = sampleDistribution.getSampleSize();
       this.standardError = calculateStandardError(sd, sampleSize);

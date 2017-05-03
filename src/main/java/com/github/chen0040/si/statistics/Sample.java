@@ -5,9 +5,8 @@ import com.github.chen0040.si.exceptions.VariableMixedValueTypeException;
 import com.github.chen0040.si.exceptions.NoObservationFoundException;
 import com.github.chen0040.si.exceptions.VariableWrongValueTypeException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -16,6 +15,7 @@ import java.util.Optional;
 public class Sample {
    private final List<Observation> observations = new ArrayList<>();
    private Optional<Boolean> isNumeric = Optional.empty();
+   private final Set<String> groups = new HashSet<>();
 
 
    private boolean randomlySampledOrAssigned = true;
@@ -32,6 +32,8 @@ public class Sample {
       } else {
          isNumeric = Optional.of(observation.isNumeric());
       }
+
+      groups.add(observation.getGroupId());
 
       observations.add(observation);
    }
@@ -70,8 +72,8 @@ public class Sample {
       return observations;
    }
 
-   public long groups(){
-      return observations.stream().map(Observation::getGroupId).distinct().count();
+   public List<String> groups(){
+      return groups.stream().collect(Collectors.toList());
    }
 
    public boolean isRandomlySampledOrAssigned() {
@@ -89,4 +91,6 @@ public class Sample {
    public void setTruePopulationSize(int truePopulationSize) {
       this.truePopulationSize = truePopulationSize;
    }
+
+
 }

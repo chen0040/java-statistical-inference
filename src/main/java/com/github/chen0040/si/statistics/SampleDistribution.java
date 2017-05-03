@@ -16,7 +16,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 @Setter
 public class SampleDistribution {
 
-   private double sampleMeanPointEstimate;
+   private double sampleMean;
    private double sampleSd;
    private double sampleVariance;
    private boolean isNumeric;
@@ -24,7 +24,7 @@ public class SampleDistribution {
 
    @Getter(AccessLevel.NONE)
    @Setter(AccessLevel.NONE)
-   private double proportionPointEstimate;
+   private double proportion;
 
    @Getter(AccessLevel.NONE)
    @Setter(AccessLevel.NONE)
@@ -32,6 +32,10 @@ public class SampleDistribution {
 
    @Setter(AccessLevel.NONE)
    private final String groupId;
+
+   @Getter(AccessLevel.NONE)
+   @Setter(AccessLevel.NONE)
+   private double sumOfSquares;
 
    public SampleDistribution(Sample sample, String groupId){
       if(!sample.isNumeric()){
@@ -42,15 +46,17 @@ public class SampleDistribution {
 
       isNumeric = true;
 
-      sampleMeanPointEstimate = sample.getObservations().stream()
+      sampleMean = sample.getObservations().stream()
               .filter(o -> groupId == null || groupId.equals(o.getGroupId()))
               .map(Observation::getNumericValue)
               .reduce((a, b) -> a + b).get() / sample.size(groupId);
 
-      sampleVariance = sample.getObservations().stream()
+      sumOfSquares = sample.getObservations().stream()
               .filter(o -> groupId == null || groupId.equals(o.getGroupId()))
-              .map(o -> Math.pow(o.getNumericValue() - sampleMeanPointEstimate, 2.0))
-              .reduce((a, b) -> a + b).get() / (sample.size(groupId)-1);
+              .map(o -> Math.pow(o.getNumericValue() - sampleMean, 2.0))
+              .reduce((a, b) -> a + b).get();
+
+      sampleVariance = sumOfSquares / (sample.size(groupId)-1);
 
       sampleSd = Math.sqrt(sampleVariance);
 
@@ -66,10 +72,10 @@ public class SampleDistribution {
 
       isNumeric = false;
 
-      sampleMeanPointEstimate = sample.size(groupId) * sample.proportion(successLabel, groupId);
+      sampleMean = sample.size(groupId) * sample.proportion(successLabel, groupId);
 
-      this.proportionPointEstimate = sample.proportion(successLabel, groupId);
-      sampleVariance =  sample.size(groupId) * this.proportionPointEstimate * (1-this.proportionPointEstimate);
+      this.proportion = sample.proportion(successLabel, groupId);
+      sampleVariance =  sample.size(groupId) * this.proportion * (1-this.proportion);
 
       sampleSd = Math.sqrt(sampleVariance);
 
@@ -78,15 +84,15 @@ public class SampleDistribution {
       this.successLabel = successLabel;
    }
 
-   public double getProportionPointEstimate(){
+   public double getProportion(){
       if(isNumeric()){
          throw new NotImplementedException();
       }
-      return proportionPointEstimate;
+      return proportion;
    }
 
-   public void setProportionPointEstimate(double p) {
-      proportionPointEstimate = p;
+   public void setProportion(double p) {
+      proportion = p;
    }
 
    public String getSuccessLabel(){
@@ -104,5 +110,13 @@ public class SampleDistribution {
 
    public boolean isCategorical() {
       return !isNumeric();
+   }
+
+   public double getSumOfSquares() {
+      if(!isNumeric()){
+         throw new NotImplementedException();
+      }
+
+      return sumOfSquares;
    }
 }

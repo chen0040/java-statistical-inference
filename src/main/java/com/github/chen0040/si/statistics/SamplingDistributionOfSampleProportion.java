@@ -23,7 +23,7 @@ public class SamplingDistributionOfSampleProportion {
 
    private final DistributionFamily distributionFamily;
 
-   // the standard deviation of the sampling distribution of sample proportions
+   // the standard error of the point estimate, which is the standard deviation of the sampling distribution of sample proportions
    private final double standardError;
 
    private final String groupId;
@@ -36,7 +36,7 @@ public class SamplingDistributionOfSampleProportion {
          throw new VariableWrongValueTypeException("Sampling distribution for sample proportions is not defined for numeric variable");
       }
 
-      double p = sampleDistribution.getProportionPointEstimate();
+      double p = sampleDistribution.getProportion();
       this.sampleProportionPointEstimate = p;
       this.sampleSize = sampleDistribution.getSampleSize();
 
@@ -105,15 +105,29 @@ public class SamplingDistributionOfSampleProportion {
          double p_hi = 1.0 - p_lo;
          double Z = distribution.inverseCumulativeProbability(p_hi);
 
-         return new Interval(p_bar - Z * standardError, p_bar + Z * standardError);
+         return makeCI(new Interval(p_bar - Z * standardError, p_bar + Z * standardError), confidenceLevel);
       } else if(distributionFamily == DistributionFamily.StudentT) {
          TDistribution distribution = new TDistribution(df);
          double p_lo = (1.0 - confidenceLevel) / 2;
          double p_hi = 1.0 - p_lo;
          double t_df = distribution.inverseCumulativeProbability(p_hi);
-         return new Interval(p_bar - t_df * standardError, p_bar + t_df * standardError);
+         return makeCI(new Interval(p_bar - t_df * standardError, p_bar + t_df * standardError), confidenceLevel);
       } else {
          throw new NotImplementedException();
       }
    }
+
+   private ConfidenceInterval makeCI(Interval interval, double confidenceLevel) {
+
+
+      StringBuilder sb = new StringBuilder();
+      sb.append("We are ").append(confidenceLevel * 100).append("% confident that");
+      sb.append(" the proportion of \"").append(groupId).append("\" is ");
+      sb.append(interval);
+
+      return new ConfidenceInterval(interval, confidenceLevel, sb.toString());
+   }
+
+
+
 }

@@ -11,18 +11,18 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Created by xschen on 3/5/2017.
- * This is the sampling distribution of (x_bar_1 - x_bar_2), where
- * x_bar_1 is the sample mean of group 1
- * x_bar_2 is the sample mean of group 2
+ * This is the sampling distribution of (p_bar_1 - p_bar_2), where
+ * p_bar_1 is the sample proportion of group 1
+ * p_bar_2 is the sample proportion of group 2
  *
  * The group id here is referred to as the exploratory variable and is a categorical variable
  */
 public class SamplingDistributionOfSampleProportionDifference {
 
-   // point estimate of the sample proportion p_bar_1
+   // p_hat_1: point estimate of the sample proportion p_bar_1
    private final double sampleProportion1PointEstimate;
 
-   // point estimate of the sample proportion p_bar_2
+   // p_hat_2: point estimate of the sample proportion p_bar_2
    private final double sampleProportion2PointEstimate;
 
    private final int sampleSize1;
@@ -112,6 +112,14 @@ public class SamplingDistributionOfSampleProportionDifference {
       return sampleProportion1PointEstimate;
    }
 
+   public double getSampleProportion2PointEstimate() {
+      return sampleProportion2PointEstimate;
+   }
+
+   public double getSampleProportionDifferencePointEstimate() {
+      return sampleProportion1PointEstimate - sampleProportion2PointEstimate;
+   }
+
    public double getStandardError() {
       return standardError;
    }
@@ -120,7 +128,7 @@ public class SamplingDistributionOfSampleProportionDifference {
       return sampleSize1;
    }
 
-   public Interval confidenceInterval(double confidenceLevel) {
+   public ConfidenceInterval confidenceInterval(double confidenceLevel) {
       if(confidenceLevel < 0 || confidenceLevel > 1) {
          throw new OutOfRangeException(confidenceLevel, 0, 1);
       }
@@ -131,15 +139,26 @@ public class SamplingDistributionOfSampleProportionDifference {
          double p_lo = (1.0 - confidenceLevel) / 2;
          double p_hi = 1.0 - p_lo;
          double Z = distribution.inverseCumulativeProbability(p_hi);
-         return new Interval(dp_bar - Z * standardError, dp_bar + Z * standardError);
+         return makeCI(new Interval(dp_bar - Z * standardError, dp_bar + Z * standardError), confidenceLevel);
       } else if(distributionFamily == DistributionFamily.StudentT) {
          TDistribution distribution = new TDistribution(df);
          double p_lo = (1.0 - confidenceLevel) / 2;
          double p_hi = 1.0 - p_lo;
          double t_df = distribution.inverseCumulativeProbability(p_hi);
-         return new Interval(dp_bar - t_df * standardError, dp_bar + t_df * standardError);
+         return makeCI(new Interval(dp_bar - t_df * standardError, dp_bar + t_df * standardError), confidenceLevel);
       } else {
          throw new NotImplementedException();
       }
+   }
+
+   private ConfidenceInterval makeCI(Interval interval, double confidenceLevel) {
+
+
+      StringBuilder sb = new StringBuilder();
+      sb.append("We are ").append(confidenceLevel * 100).append("% confident that");
+      sb.append(" the proportion of \"").append(groupId1).append("\" is ");
+      sb.append(interval).append(" higher than the proportion of \"").append(groupId2).append("\"");
+
+      return new ConfidenceInterval(interval, confidenceLevel, sb.toString());
    }
 }

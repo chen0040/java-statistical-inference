@@ -23,13 +23,15 @@ public class SamplingDistributionOfSampleProportionDifferenceUnitTest {
       double p1 = 0.71;
       int n2 = 1028;
       int n1 = 83;
-      String group2 = "US";
-      String group1 = "Coursera";
+      String group2 = "US citizens who believes there should NOT be a ban on gun";
+      String group1 = "Coursera Student who believes there should a ban on gun";
 
       SamplingDistributionOfSampleProportionDifference differenceDistribution = new SamplingDistributionOfSampleProportionDifference(p1, p2, n1, n2, group1, group2);
-      Interval ci = differenceDistribution.confidenceInterval(0.95);
+      ConfidenceInterval ci = differenceDistribution.confidenceInterval(0.95);
 
       logger.info("confidence interval: {}", ci);
+      logger.info("interpretation: {}", ci.getSummary());
+
 
    }
 

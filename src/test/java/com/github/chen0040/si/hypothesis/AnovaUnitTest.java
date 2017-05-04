@@ -17,7 +17,7 @@ import static org.testng.Assert.*;
 /**
  * Created by xschen on 4/5/2017.
  */
-public class ANOVAUnitTest {
+public class AnovaUnitTest {
 
    private SampleDistribution sampleDistributionTotal;
    private Map<String, SampleDistribution> sampleDistributionByGroupId = new HashMap<>();

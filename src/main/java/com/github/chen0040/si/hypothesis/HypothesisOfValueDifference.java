@@ -70,8 +70,10 @@ public class HypothesisOfValueDifference {
 
       df = Math.min(n1-1, n2-1);
 
+      double nullValue = 0;
       if(n1 < 30 || n2 < 30) {
-         double t_df = ((xHat1 - xHat2) - 0) / SE;
+
+         double t_df = ((xHat1 - xHat2) - nullValue) / SE;
 
          TDistribution distribution = new TDistribution(df);
          double cp = distribution.cumulativeProbability(t_df);
@@ -80,7 +82,7 @@ public class HypothesisOfValueDifference {
          testStatistic = t_df;
          distributionFamily = DistributionFamily.StudentT;
       } else {
-         double Z = ((xHat1 - xHat2) - 0) / SE;
+         double Z = ((xHat1 - xHat2) - nullValue) / SE;
          NormalDistribution distribution = new NormalDistribution(0, 1.0);
          double cp = distribution.cumulativeProbability(Z);
          pValueOneTail = 1 - cp;

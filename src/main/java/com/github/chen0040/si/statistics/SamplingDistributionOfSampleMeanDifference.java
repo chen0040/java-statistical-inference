@@ -88,7 +88,7 @@ public class SamplingDistributionOfSampleMeanDifference {
    //       SE is the standard error (which is the standard deviation of the sampling distribution)
    //       sigma is the population standard deviation (can be estimated by the sample standard deviation s_bar)
    //       n is the sample size
-   public SamplingDistributionOfSampleMeanDifference(double sampleMean1PointEstimate, double sampleMean2PointEstimate, int sampleSize1, int sampleSize2, double sd1, double sd2, String groupId1, String groupId2) {
+   public SamplingDistributionOfSampleMeanDifference(double sampleMean1PointEstimate, double sampleMean2PointEstimate, double sd1, double sd2, int sampleSize1, int sampleSize2, String groupId1, String groupId2) {
       this.sampleMean1PointEstimate = sampleMean1PointEstimate;
       this.sampleMean2PointEstimate = sampleMean2PointEstimate;
 
@@ -140,7 +140,7 @@ public class SamplingDistributionOfSampleMeanDifference {
       return sampleSize2;
    }
 
-   public Interval confidenceInterval(double confidenceLevel) {
+   public ConfidenceInterval confidenceInterval(double confidenceLevel) {
       if(confidenceLevel < 0 || confidenceLevel > 1) {
          throw new OutOfRangeException(confidenceLevel, 0, 1);
       }
@@ -151,15 +151,30 @@ public class SamplingDistributionOfSampleMeanDifference {
          double p_lo = (1.0 - confidenceLevel) / 2;
          double p_hi = 1.0 - p_lo;
          double Z = distribution.inverseCumulativeProbability(p_hi);
-         return new Interval(dx_bar - Z * standardError, dx_bar + Z * standardError);
+         return makeCI(new Interval(dx_bar - Z * standardError, dx_bar + Z * standardError), confidenceLevel);
       } else if(distributionFamily == DistributionFamily.StudentT) {
          TDistribution distribution = new TDistribution(df);
          double p_lo = (1.0 - confidenceLevel) / 2;
          double p_hi = 1.0 - p_lo;
          double t_df = distribution.inverseCumulativeProbability(p_hi);
-         return new Interval(dx_bar - t_df * standardError, dx_bar + t_df * standardError);
+         return makeCI(new Interval(dx_bar - t_df * standardError, dx_bar + t_df * standardError),confidenceLevel);
       } else {
          throw new NotImplementedException();
       }
+   }
+
+   private ConfidenceInterval makeCI(Interval interval, double confidenceLevel) {
+
+
+      StringBuilder sb = new StringBuilder();
+      sb.append("We are ").append(confidenceLevel * 100).append("% confident that");
+      sb.append(" the value of \"").append(groupId1).append("\" is ");
+      sb.append(interval).append(" higher than the value of \"").append(groupId2).append("\"");
+
+      return new ConfidenceInterval(interval, confidenceLevel, sb.toString());
+   }
+
+   public DistributionFamily getDistributionFamily(){
+      return distributionFamily;
    }
 }

@@ -1,10 +1,12 @@
 package com.github.chen0040.si.statistics;
 
 
+import com.github.chen0040.si.enums.DistributionFamily;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.testng.Assert.*;
 
 
@@ -17,7 +19,7 @@ public class SamplingDistributionOfSampleProportionDifferenceUnitTest {
 
    // calculating the confidence interval of the difference between two population that are unknown
    @Test
-   public void test_confidence_interval(){
+   public void test_confidence_interval_large_sample(){
 
       double p2 = 0.25;
       double p1 = 0.71;
@@ -32,6 +34,7 @@ public class SamplingDistributionOfSampleProportionDifferenceUnitTest {
       logger.info("confidence interval: {}", ci);
       logger.info("interpretation: {}", ci.getSummary());
 
+      assertThat(differenceDistribution.getDistributionFamily()).isEqualTo(DistributionFamily.Normal);
 
    }
 

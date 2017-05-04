@@ -161,4 +161,9 @@ public class SamplingDistributionOfSampleProportionDifference {
 
       return new ConfidenceInterval(interval, confidenceLevel, sb.toString());
    }
+
+
+   public DistributionFamily getDistributionFamily() {
+      return distributionFamily;
+   }
 }

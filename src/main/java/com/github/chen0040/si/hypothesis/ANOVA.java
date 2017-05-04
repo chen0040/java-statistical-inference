@@ -80,7 +80,7 @@ public class ANOVA {
 
    private boolean rejectH0 = false;
 
-   private double signficanceLevel = -1;
+   private double significanceLevel = -1;
 
    // F = ratio of (between-group-variability) / (within-group-variability)
    private double F;
@@ -117,7 +117,7 @@ public class ANOVA {
 
    public void run(SampleDistribution sampleDistributionTotal, Map<String, SampleDistribution> sampleDistributionByGroupId, double significanceLevel){
 
-      this.signficanceLevel = significanceLevel;
+      this.significanceLevel = significanceLevel;
 
       sumOfSquaresTotal = sampleDistributionTotal.getSumOfSquares();
       grandMean = sampleDistributionTotal.getSampleMean();
@@ -166,8 +166,8 @@ public class ANOVA {
       sb.append("\nF-statistic: ").append(F);
       sb.append("\np-value: ").append(pValue);
 
-      if(signficanceLevel > 0) {
-         sb.append("\nIf the significance level is ").append(signficanceLevel).append(", the null hypothesis is ").append(rejectH0 ? "rejected as p-value is smaller than that" : "failed to be rejected");
+      if(significanceLevel > 0) {
+         sb.append("\nIf the significance level is ").append(significanceLevel).append(", the null hypothesis is ").append(rejectH0 ? "rejected as p-value is smaller than that" : "failed to be rejected");
       }
 
       return sb.toString();

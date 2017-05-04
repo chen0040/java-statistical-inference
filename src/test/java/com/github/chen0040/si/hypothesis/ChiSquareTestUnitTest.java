@@ -34,5 +34,7 @@ public class ChiSquareTestUnitTest {
 
       test.report();
 
+      assertTrue(test.willRejectH0(significanceLevel));
+
    }
 }

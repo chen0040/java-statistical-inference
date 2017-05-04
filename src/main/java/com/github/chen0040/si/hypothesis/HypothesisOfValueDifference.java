@@ -48,7 +48,7 @@ public class HypothesisOfValueDifference {
 
    // the probability of observed or more extreme cases assume the null hypothesis is true
    private double pValueOneTail;
-   private double pValueTwoTail;
+   private double pValueTwoTails;
 
    private double df;
 
@@ -78,7 +78,7 @@ public class HypothesisOfValueDifference {
          TDistribution distribution = new TDistribution(df);
          double cp = distribution.cumulativeProbability(t_df);
          pValueOneTail = 1 - cp;
-         pValueTwoTail = pValueOneTail * 2;
+         pValueTwoTails = pValueOneTail * 2;
          testStatistic = t_df;
          distributionFamily = DistributionFamily.StudentT;
       } else {
@@ -86,7 +86,7 @@ public class HypothesisOfValueDifference {
          NormalDistribution distribution = new NormalDistribution(0, 1.0);
          double cp = distribution.cumulativeProbability(Z);
          pValueOneTail = 1 - cp;
-         pValueTwoTail = pValueOneTail * 2;
+         pValueTwoTails = pValueOneTail * 2;
          testStatistic = Z;
          distributionFamily = DistributionFamily.Normal;
       }
@@ -107,7 +107,7 @@ public class HypothesisOfValueDifference {
       sb.append("\nDistribution is ").append(distributionFamily);
       sb.append("\ntest statistic: ").append(testStatistic);
       sb.append("\np-value (one-tail): ").append(pValueOneTail);
-      sb.append("\np-value (two-tail): ").append(pValueTwoTail);
+      sb.append("\np-value (two-tail): ").append(pValueTwoTails);
 
 
       return sb.toString();
@@ -125,7 +125,7 @@ public class HypothesisOfValueDifference {
 
    public boolean willRejectH0(double signficanceLevel, boolean twoTails) {
       if(twoTails){
-         return pValueTwoTail < signficanceLevel;
+         return pValueTwoTails < signficanceLevel;
       } else {
          return pValueOneTail < signficanceLevel;
       }

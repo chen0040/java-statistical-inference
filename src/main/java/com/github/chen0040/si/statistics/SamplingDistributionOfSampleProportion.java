@@ -3,10 +3,13 @@ package com.github.chen0040.si.statistics;
 
 import com.github.chen0040.si.enums.DistributionFamily;
 import com.github.chen0040.si.exceptions.VariableWrongValueTypeException;
+import com.github.chen0040.si.hypothesis.Simulation;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.distribution.TDistribution;
 import org.apache.commons.math3.exception.OutOfRangeException;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import java.util.List;
 
 
 /**
@@ -31,6 +34,8 @@ public class SamplingDistributionOfSampleProportion {
    // degrees of freedom of p_bar
    private final double df;
 
+   private int simulationCount = 100;
+
    public SamplingDistributionOfSampleProportion(SampleDistribution sampleDistribution) {
       if(!sampleDistribution.isNumeric()) {
          throw new VariableWrongValueTypeException("Sampling distribution for sample proportions is not defined for numeric variable");
@@ -48,7 +53,7 @@ public class SamplingDistributionOfSampleProportion {
       int failureCount = (int)(this.sampleSize * (1-p));
 
       if(successCount < 10 || failureCount < 10) {
-         distributionFamily = DistributionFamily.StudentT;
+         distributionFamily = DistributionFamily.SimulationOnly;
       } else {
          distributionFamily = DistributionFamily.Normal;
       }
@@ -106,12 +111,14 @@ public class SamplingDistributionOfSampleProportion {
          double Z = distribution.inverseCumulativeProbability(p_hi);
 
          return makeCI(new Interval(p_bar - Z * standardError, p_bar + Z * standardError), confidenceLevel);
-      } else if(distributionFamily == DistributionFamily.StudentT) {
-         TDistribution distribution = new TDistribution(df);
+      } else if(distributionFamily == DistributionFamily.SimulationOnly) {
+         List<Double> proportions = Simulation.binomial(sampleProportionPointEstimate, sampleSize, simulationCount);
          double p_lo = (1.0 - confidenceLevel) / 2;
          double p_hi = 1.0 - p_lo;
-         double t_df = distribution.inverseCumulativeProbability(p_hi);
-         return makeCI(new Interval(p_bar - t_df * standardError, p_bar + t_df * standardError), confidenceLevel);
+
+         Interval interval = Count.quantileRange(proportions, p_lo, p_hi);
+
+         return makeCI(interval, confidenceLevel);
       } else {
          throw new NotImplementedException();
       }

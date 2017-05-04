@@ -98,5 +98,9 @@ public class ChiSquareTest {
       System.out.println(toString());
    }
 
+   public boolean willRejectH0(double significanceLevel){
+      return pValue < significanceLevel;
+   }
+
 
 }

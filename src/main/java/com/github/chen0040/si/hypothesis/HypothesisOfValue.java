@@ -1,4 +1,4 @@
-package com.github.chen0040.si.inferences;
+package com.github.chen0040.si.hypothesis;
 
 
 /**

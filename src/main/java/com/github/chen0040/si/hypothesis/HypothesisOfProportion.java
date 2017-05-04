@@ -1,9 +1,4 @@
-package com.github.chen0040.si.inferences;
-
-
-import com.github.chen0040.si.statistics.SamplingDistributionOfSampleProportion;
-import org.apache.commons.math3.distribution.NormalDistribution;
-import org.apache.commons.math3.distribution.RealDistribution;
+package com.github.chen0040.si.hypothesis;
 
 
 /**

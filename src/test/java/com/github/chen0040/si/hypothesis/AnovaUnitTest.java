@@ -67,7 +67,10 @@ public class AnovaUnitTest {
       assertThat(anova.getSumOfSquaresError()).isCloseTo(2869.80, within(10.0));
       assertThat(anova.getSumOfSquaresTotal()).isCloseTo(3106.36, within(10.0));
       assertThat(anova.getF()).isCloseTo(21.735, within(0.1));
-      assertThat(anova.getPValue()).isLessThan(0.0001);
+
+      double significanceLevel = 0.0001;
+      assertThat(anova.getPValue()).isLessThan(significanceLevel);
+      assertTrue(anova.willRejectH0(significanceLevel));
       assertTrue(anova.isRejectH0());
 
       anova.report();

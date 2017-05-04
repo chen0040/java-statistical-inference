@@ -18,7 +18,10 @@ import java.util.Map;
 /**
  * Created by xschen on 3/5/2017.
  *
- * ANOVA (Analysis of Variance) is used to find whether there is a correlation between a numerical variable and a categorical variable for which the categorical
+ * ANOVA (Analysis of Variance)
+ * Conducted between one numerical variable and one categorical variable
+ *
+ * it is used to find whether there is a correlation between a numerical variable and a categorical variable for which the categorical
  * variable has more than two levels
  *
  * Suppose the sample mean of the numerical variables grouped by the categorical variables are:
@@ -106,6 +109,10 @@ public class ANOVA {
 
    public ANOVA() {
 
+   }
+
+   public void run(SampleDistribution sampleDistributionTotal, Map<String, SampleDistribution> sampleDistributionByGroupId){
+      run(sampleDistributionTotal, sampleDistributionByGroupId, -1);
    }
 
    public void run(SampleDistribution sampleDistributionTotal, Map<String, SampleDistribution> sampleDistributionByGroupId, double significanceLevel){

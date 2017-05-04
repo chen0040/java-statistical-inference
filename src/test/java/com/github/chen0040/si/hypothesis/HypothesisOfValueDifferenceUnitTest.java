@@ -26,7 +26,6 @@ public class HypothesisOfValueDifferenceUnitTest {
 
       double significanceLevel = 0.05;
       assertThat(test.getPValueOneTail()).isLessThan(significanceLevel);
-      assertThat(test.getPValueTwoTail()).isLessThan(significanceLevel);
 
       boolean twoTails = true;
       assertTrue(test.willRejectH0(significanceLevel, twoTails));

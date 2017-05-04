@@ -36,8 +36,6 @@ public class ChiSquareTest {
 
    private double significanceLevel;
 
-   private boolean rejectH0 = false;
-
    public ChiSquareTest(Sample sample) {
 
    }
@@ -71,9 +69,6 @@ public class ChiSquareTest {
 
       this.significanceLevel = significanceLevel;
 
-      if(significanceLevel > 0){
-         rejectH0 = pValue < significanceLevel;
-      }
    }
 
    public String getSummary(){
@@ -84,6 +79,7 @@ public class ChiSquareTest {
       sb.append("\np-value: ").append(pValue);
 
       if(significanceLevel > 0){
+         boolean rejectH0 = pValue < significanceLevel;
          sb.append("\nif the significance level is ").append(significanceLevel).append(", then ").append(rejectH0 ? "two categorical variables are dependent" : "two categorical variables are independent");
       }
       return sb.toString();

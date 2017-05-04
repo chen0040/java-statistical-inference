@@ -68,7 +68,6 @@ public class AnovaUnitTest {
       double significanceLevel = 0.0001;
       assertThat(anova.getPValue()).isLessThan(significanceLevel);
       assertTrue(anova.willRejectH0(significanceLevel));
-      assertTrue(anova.isRejectH0());
 
       anova.report();
    }

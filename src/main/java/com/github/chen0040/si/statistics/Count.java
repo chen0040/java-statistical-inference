@@ -52,7 +52,7 @@ public class Count {
       values.sort(Double::compare);
 
       for(int i=0; i < n; ++i) {
-         if(values.get(i) <= quantile) {
+         if(values.get(i) >= quantile) {
             return (i+1.0) / n;
          }
       }

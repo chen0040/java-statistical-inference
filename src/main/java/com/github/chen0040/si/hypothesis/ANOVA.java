@@ -78,7 +78,7 @@ public class ANOVA {
    // unexplained variability (variability that cannot be explained by the categorical variable)
    private double meanSquaresError;
 
-   private boolean rejectH0 = false;
+
 
    private double significanceLevel = -1;
 
@@ -126,8 +126,6 @@ public class ANOVA {
       sumOfSquaresGroup = 0;
 
       for(Map.Entry<String, SampleDistribution> entry : sampleDistributionByGroupId.entrySet()){
-         String groupId = entry.getKey();
-
          SampleDistribution sampleDistributionGroup = entry.getValue();
          double groupMean = sampleDistributionGroup.getSampleMean();
          sumOfSquaresGroup += Math.pow(groupMean - grandMean, 2.0) * sampleDistributionGroup.getSampleSize();
@@ -147,7 +145,7 @@ public class ANOVA {
       FDistribution fDistribution = new FDistribution(dfGroup, dfError);
 
       pValue = 1 - fDistribution.cumulativeProbability(F);
-      rejectH0 = pValue < significanceLevel;
+
    }
 
    public String getSummary() {
@@ -167,6 +165,8 @@ public class ANOVA {
       sb.append("\np-value: ").append(pValue);
 
       if(significanceLevel > 0) {
+
+         boolean rejectH0 = pValue < significanceLevel;
          sb.append("\nIf the significance level is ").append(significanceLevel).append(", the null hypothesis is ").append(rejectH0 ? "rejected as p-value is smaller than that" : "failed to be rejected");
       }
 

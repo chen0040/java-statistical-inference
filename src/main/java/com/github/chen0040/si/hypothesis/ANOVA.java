@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * Created by xschen on 3/5/2017.
  *
- * Anova (Analysis of Variance) is used to find whether there is a correlation between a numerical variable and a categorical variable for which the categorical
+ * ANOVA (Analysis of Variance) is used to find whether there is a correlation between a numerical variable and a categorical variable for which the categorical
  * variable has more than two levels
  *
  * Suppose the sample mean of the numerical variables grouped by the categorical variables are:
@@ -38,9 +38,9 @@ import java.util.Map;
  */
 @Getter
 @Setter
-public class Anova {
+public class ANOVA {
 
-   private static final Logger logger = LoggerFactory.getLogger(Anova.class);
+   private static final Logger logger = LoggerFactory.getLogger(ANOVA.class);
 
    // SST: sum of squares total
    // calculated as \sum^n_{i=1} (y_i - y_bar)^2
@@ -84,9 +84,9 @@ public class Anova {
 
    private double pValue;
 
-   public Anova(Sample sample) {
+   public ANOVA(Sample sample) {
       if(sample.isCategorical()) {
-         logger.error("Anova can only be applied for sample that involves a numerical variable and a categorical variable");
+         logger.error("ANOVA can only be applied for sample that involves a numerical variable and a categorical variable");
          throw new NotImplementedException();
       }
 
@@ -104,7 +104,7 @@ public class Anova {
       run(sampleDistributionTotal, sampleDistributionByGroupId, -1);
    }
 
-   public Anova() {
+   public ANOVA() {
 
    }
 

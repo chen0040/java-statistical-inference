@@ -1,15 +1,12 @@
 package com.github.chen0040.si.hypothesis;
 
 
-import com.github.chen0040.si.statistics.Sample;
 import com.github.chen0040.si.statistics.SampleDistribution;
 import org.mockito.Mockito;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.within;
@@ -20,12 +17,12 @@ import static org.testng.Assert.*;
 /**
  * Created by xschen on 4/5/2017.
  */
-public class AnovaUnitTest {
+public class ANOVAUnitTest {
 
    private SampleDistribution sampleDistributionTotal;
    private Map<String, SampleDistribution> sampleDistributionByGroupId = new HashMap<>();
 
-   private Anova anova;
+   private ANOVA anova;
 
 
 
@@ -60,7 +57,7 @@ public class AnovaUnitTest {
 
    @Test
    public void test_independence_between_numerical_and_categorical_variables() {
-      Anova anova = new Anova();
+      ANOVA anova = new ANOVA();
       anova.run(sampleDistributionTotal, sampleDistributionByGroupId, 0.0001);
 
       assertThat(anova.getSumOfSquaresGroup()).isCloseTo(236.56, within(1.0));

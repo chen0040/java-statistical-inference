@@ -61,8 +61,12 @@ public class ANOVA {
    // degrees of freedom for error
    private double dfError;
 
+   // between group variability
+   // explained variability (variability that can be explained by the categorical variable)
    private double meanSquaresGroup;
 
+   // within group variability
+   // unexplained variability (variability that cannot be explained by the categorical variable)
    private double meanSquaresError;
 
    // F = ratio of (between-group-variability) / (within-group-variability)

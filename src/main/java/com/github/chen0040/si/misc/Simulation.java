@@ -1,4 +1,4 @@
-package com.github.chen0040.si.hypothesis;
+package com.github.chen0040.si.misc;
 
 
 import org.apache.commons.math3.distribution.BinomialDistribution;

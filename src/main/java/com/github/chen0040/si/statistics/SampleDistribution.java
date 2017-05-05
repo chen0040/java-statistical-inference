@@ -49,18 +49,18 @@ public class SampleDistribution {
       sampleMean = sample.getObservations().stream()
               .filter(o -> groupId == null || groupId.equals(o.getGroupId()))
               .map(Observation::getNumericValue)
-              .reduce((a, b) -> a + b).get() / sample.size(groupId);
+              .reduce((a, b) -> a + b).get() / sample.countByGroupId(groupId);
 
       sumOfSquares = sample.getObservations().stream()
               .filter(o -> groupId == null || groupId.equals(o.getGroupId()))
               .map(o -> Math.pow(o.getNumericValue() - sampleMean, 2.0))
               .reduce((a, b) -> a + b).get();
 
-      sampleVariance = sumOfSquares / (sample.size(groupId)-1);
+      sampleVariance = sumOfSquares / (sample.countByGroupId(groupId)-1);
 
       sampleSd = Math.sqrt(sampleVariance);
 
-      sampleSize = sample.size(groupId);
+      sampleSize = sample.countByGroupId(groupId);
    }
 
    public SampleDistribution(Sample sample, String successLabel, String groupId) {
@@ -72,14 +72,14 @@ public class SampleDistribution {
 
       isNumeric = false;
 
-      sampleMean = sample.size(groupId) * sample.proportion(successLabel, groupId);
+      sampleMean = sample.countByGroupId(groupId) * sample.proportion(successLabel, groupId);
 
       this.proportion = sample.proportion(successLabel, groupId);
-      sampleVariance =  sample.size(groupId) * this.proportion * (1-this.proportion);
+      sampleVariance =  sample.countByGroupId(groupId) * this.proportion * (1-this.proportion);
 
       sampleSd = Math.sqrt(sampleVariance);
 
-      sampleSize = sample.size(groupId);
+      sampleSize = sample.countByGroupId(groupId);
 
       this.successLabel = successLabel;
    }

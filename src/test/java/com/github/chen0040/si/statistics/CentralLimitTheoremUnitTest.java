@@ -4,11 +4,9 @@ package com.github.chen0040.si.statistics;
 import com.github.chen0040.si.exceptions.VariableWrongValueTypeException;
 import org.mockito.Mockito;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.ExpectedExceptions;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.testng.Assert.*;
 
 
 /**
@@ -47,7 +45,7 @@ public class CentralLimitTheoremUnitTest {
 
       Mockito.when(numericalSample.isSampledWithReplacement()).thenReturn(false);
       Mockito.when(numericalSample.getTruePopulationSize()).thenReturn(100);
-      Mockito.when(numericalSample.size(null)).thenReturn(11);
+      Mockito.when(numericalSample.countByGroupId(null)).thenReturn(11);
       assertThat(CentralLimitTheorem.isHeld4SampleMean(numericalSample, null)).isEqualTo(false);
    }
 
@@ -57,7 +55,7 @@ public class CentralLimitTheoremUnitTest {
 
       Mockito.when(numericalSample.isSampledWithReplacement()).thenReturn(false);
       Mockito.when(numericalSample.getTruePopulationSize()).thenReturn(100);
-      Mockito.when(numericalSample.size(null)).thenReturn(9);
+      Mockito.when(numericalSample.countByGroupId(null)).thenReturn(9);
       assertThat(CentralLimitTheorem.isHeld4SampleMean(numericalSample, null)).isEqualTo(false);
    }
 
@@ -67,7 +65,7 @@ public class CentralLimitTheoremUnitTest {
 
       Mockito.when(numericalSample.isSampledWithReplacement()).thenReturn(false);
       Mockito.when(numericalSample.getTruePopulationSize()).thenReturn(1000);
-      Mockito.when(numericalSample.size(null)).thenReturn(90);
+      Mockito.when(numericalSample.countByGroupId(null)).thenReturn(90);
       assertThat(CentralLimitTheorem.isHeld4SampleMean(numericalSample, null)).isEqualTo(true);
    }
 
@@ -76,7 +74,7 @@ public class CentralLimitTheoremUnitTest {
       Mockito.when(numericalSample.isRandomlySampledOrAssigned()).thenReturn(true);
 
       Mockito.when(numericalSample.isSampledWithReplacement()).thenReturn(true);
-      Mockito.when(numericalSample.size(null)).thenReturn(30);
+      Mockito.when(numericalSample.countByGroupId(null)).thenReturn(30);
       assertThat(CentralLimitTheorem.isHeld4SampleMean(numericalSample, null)).isEqualTo(true);
    }
 
@@ -97,7 +95,7 @@ public class CentralLimitTheoremUnitTest {
 
       Mockito.when(categoricalSample.isSampledWithReplacement()).thenReturn(false);
       Mockito.when(categoricalSample.getTruePopulationSize()).thenReturn(100);
-      Mockito.when(categoricalSample.size(null)).thenReturn(11);
+      Mockito.when(categoricalSample.countByGroupId(null)).thenReturn(11);
       assertThat(CentralLimitTheorem.isHeld4SampleProportion(categoricalSample, "some label",  null)).isEqualTo(false);
    }
 
@@ -107,7 +105,7 @@ public class CentralLimitTheoremUnitTest {
 
       Mockito.when(categoricalSample.isSampledWithReplacement()).thenReturn(false);
       Mockito.when(categoricalSample.getTruePopulationSize()).thenReturn(100);
-      Mockito.when(categoricalSample.size(null)).thenReturn(9);
+      Mockito.when(categoricalSample.countByGroupId(null)).thenReturn(9);
       Mockito.when(categoricalSample.proportion("some label", null)).thenReturn(0.5);
       assertThat(CentralLimitTheorem.isHeld4SampleProportion(categoricalSample,"some label",  null)).isEqualTo(false);
    }
@@ -118,7 +116,7 @@ public class CentralLimitTheoremUnitTest {
 
       Mockito.when(categoricalSample.isSampledWithReplacement()).thenReturn(false);
       Mockito.when(categoricalSample.getTruePopulationSize()).thenReturn(1000);
-      Mockito.when(categoricalSample.size(null)).thenReturn(90);
+      Mockito.when(categoricalSample.countByGroupId(null)).thenReturn(90);
       Mockito.when(categoricalSample.proportion("some label", null)).thenReturn(0.5);
       assertThat(CentralLimitTheorem.isHeld4SampleProportion(categoricalSample, "some label", null)).isEqualTo(true);
    }
@@ -128,7 +126,7 @@ public class CentralLimitTheoremUnitTest {
       Mockito.when(categoricalSample.isRandomlySampledOrAssigned()).thenReturn(true);
 
       Mockito.when(categoricalSample.isSampledWithReplacement()).thenReturn(true);
-      Mockito.when(categoricalSample.size(null)).thenReturn(30);
+      Mockito.when(categoricalSample.countByGroupId(null)).thenReturn(30);
       Mockito.when(categoricalSample.proportion("some label", null)).thenReturn(0.5);
       assertThat(CentralLimitTheorem.isHeld4SampleProportion(categoricalSample, "some label", null)).isEqualTo(true);
    }

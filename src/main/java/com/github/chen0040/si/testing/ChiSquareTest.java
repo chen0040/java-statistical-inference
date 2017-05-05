@@ -1,4 +1,4 @@
-package com.github.chen0040.si.hypothesis;
+package com.github.chen0040.si.testing;
 
 
 import com.github.chen0040.si.statistics.ContingencyTable;

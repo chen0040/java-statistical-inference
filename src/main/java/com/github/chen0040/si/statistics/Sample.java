@@ -49,7 +49,7 @@ public class Sample {
       return !isNumeric();
    }
 
-   public int size(String groupId) {
+   public int countByGroupId(String groupId) {
       return (int)observations.stream().filter(o -> groupId == null || groupId.equals(o.getGroupId())).count();
    }
 
@@ -64,7 +64,7 @@ public class Sample {
       }
       return (double)observations.stream()
               .filter(o -> groupId == null || groupId.equals(o.getGroupId()))
-              .filter(o -> o.getCategoricalValue().equals(successLabel)).count() / size(groupId);
+              .filter(o -> o.getCategoricalValue().equals(successLabel)).count() / countByGroupId(groupId);
    }
 
 

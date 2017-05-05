@@ -1,4 +1,4 @@
-package com.github.chen0040.si.hypothesis;
+package com.github.chen0040.si.testing;
 
 
 import org.testng.annotations.Test;
@@ -10,7 +10,7 @@ import static org.testng.Assert.*;
 /**
  * Created by xschen on 4/5/2017.
  */
-public class HypothesisOfValueDifferenceUnitTest {
+public class TestingOfValueDifferenceUnitTest {
 
    @Test
    public void test_with_small_sample_size(){
@@ -21,7 +21,7 @@ public class HypothesisOfValueDifferenceUnitTest {
       int n1 = 22;
       int n2 = 22;
 
-      HypothesisOfValueDifference test = new HypothesisOfValueDifference();
+      TestingOnValueDifference test = new TestingOnValueDifference();
       test.run(xHat1, xHat2, s1, s2, n1, n2);
 
       double significanceLevel = 0.05;

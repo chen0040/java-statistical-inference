@@ -42,7 +42,7 @@ public class CentralLimitTheorem {
          logger.info("0 (success): randomly sampled or assigned");
       }
 
-      int n = sample.size(groupId);
+      int n = sample.countByGroupId(groupId);
       // if sampling without replacement, then the sample size must be smaller than 10% of the true population under study
       if(!sample.isSampledWithReplacement()){
          if(n >= sample.getTruePopulationSize() * 10 / 100) {
@@ -91,7 +91,7 @@ public class CentralLimitTheorem {
          logger.info("1 (success): sample is randomly sampled or assigned");
       }
 
-      int n = sample.size(groupId);
+      int n = sample.countByGroupId(groupId);
       // if sampling without replacement, then the sample size must be smaller than 10% of the true population under study
       if(!sample.isSampledWithReplacement()){
          if(n >= sample.getTruePopulationSize() * 10 / 100) {
@@ -107,7 +107,7 @@ public class CentralLimitTheorem {
 
 
 
-      if(sample.size(groupId) >= 30){
+      if(sample.countByGroupId(groupId) >= 30){
          logger.info("2 (success): sample size > 30");
          return true;
       } else {

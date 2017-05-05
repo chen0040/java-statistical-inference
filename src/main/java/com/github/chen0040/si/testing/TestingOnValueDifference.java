@@ -1,4 +1,4 @@
-package com.github.chen0040.si.hypothesis;
+package com.github.chen0040.si.testing;
 
 
 import com.github.chen0040.si.enums.DistributionFamily;
@@ -20,7 +20,7 @@ import org.apache.commons.math3.distribution.TDistribution;
  */
 @Getter
 @Setter
-public class HypothesisOfValueDifference {
+public class TestingOnValueDifference {
 
    // point estimate of sample mean in group 1
    private double xHat1;
@@ -54,7 +54,7 @@ public class HypothesisOfValueDifference {
 
    private DistributionFamily distributionFamily;
 
-   public HypothesisOfValueDifference(){
+   public TestingOnValueDifference(){
 
    }
 

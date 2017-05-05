@@ -1,7 +1,8 @@
-package com.github.chen0040.si.hypothesis;
+package com.github.chen0040.si.testing;
 
 
 import com.github.chen0040.si.enums.DistributionFamily;
+import com.github.chen0040.si.misc.Simulation;
 import com.github.chen0040.si.statistics.Count;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class HypothesisOfProportion {
+public class TestingOnProportion {
 
    // point estimate of proportion (observed value)
    private double pHat;
@@ -47,7 +48,7 @@ public class HypothesisOfProportion {
 
    // pHat: observed sample proportion
    // p_null: expected proportion proposed by the null hypothesis
-   public HypothesisOfProportion(){
+   public TestingOnProportion(){
 
    }
 

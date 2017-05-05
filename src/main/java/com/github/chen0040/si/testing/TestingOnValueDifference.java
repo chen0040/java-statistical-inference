@@ -58,6 +58,16 @@ public class TestingOnValueDifference {
 
    }
 
+
+   /**
+    * The method calculates the p-value for both one-tail and two-tails testing of values from two different population (i.e., groups)
+    * @param xHat1 the point estimate of the sample mean for population 1
+    * @param xHat2 the point estimate of the sample mean for population 2
+    * @param s1 the point estimate of the sample standard deviation for population 1
+    * @param s2 the point estimate of the sample standard deviation for population 2
+    * @param n1 the sample size of sample drawn from population 1
+    * @param n2 the sample size of sample drawn from population 2
+    */
    public void run(double xHat1,double xHat2, double s1, double s2, int n1, int n2){
       this.xHat1 = xHat1;
       this.xHat2 = xHat2;
@@ -123,11 +133,17 @@ public class TestingOnValueDifference {
       System.out.println(toString());
    }
 
-   public boolean willRejectH0(double signficanceLevel, boolean twoTails) {
+   /**
+    * The method reject null hypothesis if the p-value calculated from the sample is smaller than the significance level
+    * @param significanceLevel the significance level, usually about 0.05
+    * @param twoTails true if the testing is two tails; false otherwise
+    * @return true if the null hypothesis H_0 is rejected; false if H_0 fails to be rejected
+    */
+   public boolean willRejectH0(double significanceLevel, boolean twoTails) {
       if(twoTails){
-         return pValueTwoTails < signficanceLevel;
+         return pValueTwoTails < significanceLevel;
       } else {
-         return pValueOneTail < signficanceLevel;
+         return pValueOneTail < significanceLevel;
       }
    }
 }

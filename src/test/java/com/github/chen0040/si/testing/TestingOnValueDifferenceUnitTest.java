@@ -10,7 +10,7 @@ import static org.testng.Assert.*;
 /**
  * Created by xschen on 4/5/2017.
  */
-public class TestingOfValueDifferenceUnitTest {
+public class TestingOnValueDifferenceUnitTest {
 
    @Test
    public void test_with_small_sample_size(){

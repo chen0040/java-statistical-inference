@@ -53,9 +53,17 @@ public class TestingOnProportion {
    }
 
    public void run(double pHat, int sampleSize, double p){
-      run(pHat, sampleSize, p, -1);
+      run(pHat, sampleSize, p, 0.05);
    }
 
+
+   /**
+    * The method return the p-value for both one-tail and two-tails testing of proportion of success for a categorical variable
+    * @param pHat the point estimate $p_{hat}$ of sample proportion $p_{bar}$
+    * @param sampleSize the sample size of sample drawn from the population
+    * @param pNull the null value $p_0$ for true $p$ of the population under $H_0$
+    * @param significanceLevel the significance level $alpha$ which is usually 0.05
+    */
    public void run(double pHat, int sampleSize, double pNull, double significanceLevel) {
 
       this.pHat = pHat;
@@ -98,11 +106,17 @@ public class TestingOnProportion {
       return Math.sqrt(p * (p-1) / n);
    }
 
-   public boolean willRejectH0(double signficanceLevel, boolean twoTails) {
+   /**
+    * The method reject null hypothesis if the p-value calculated from the sample is smaller than the significance level
+    * @param significanceLevel the significance level, usually about 0.05
+    * @param twoTails true if the testing is two tails; false otherwise
+    * @return true if the null hypothesis H_0 is rejected; false if H_0 fails to be rejected
+    */
+   public boolean willRejectH0(double significanceLevel, boolean twoTails) {
       if(twoTails){
-         return pValueTwoTails < signficanceLevel;
+         return pValueTwoTails < significanceLevel;
       } else {
-         return pValueOneTail < signficanceLevel;
+         return pValueOneTail < significanceLevel;
       }
    }
 

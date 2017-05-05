@@ -17,7 +17,7 @@ import org.apache.commons.math3.distribution.TDistribution;
  */
 @Getter
 @Setter
-public class TestingOfValue {
+public class TestingOnValue {
 
    // point estimate of sample mean
    private double xHat;
@@ -43,10 +43,31 @@ public class TestingOfValue {
    private double pValueOneTail;
    private double pValueTwoTails;
 
+   // sample size
    private int sampleSize;
 
-   public TestingOfValue() {}
+   public TestingOnValue() {}
 
+   /**
+    * The method computes the p-value for both one-tail and two-tails testing on the mean of a numerical variable for a population
+    * @param xHat the point estimate of the sample mean
+    * @param s the point estimate of the sample standard deviation
+    * @param n the sample size
+    * @param xNull the null value for the mean of the population under null hypothesis
+    */
+   public void run(double xHat, double s, int n, double xNull) {
+      run(xHat, s, n, xNull, 0.05);
+   }
+
+
+   /**
+    * The method computes the p-value for both one-tail and two-tails testing
+    * @param xHat the point estimate of the sample mean
+    * @param s the point estimate of the sample standard deviation
+    * @param n the sample size
+    * @param xNull the null value for the mean of the population under null hypothesis
+    * @param significanceLevel the default significance level included
+    */
    public void run(double xHat, double s, int n, double xNull, double significanceLevel) {
 
       sampleSize = n;
@@ -87,11 +108,18 @@ public class TestingOfValue {
 
    }
 
-   public boolean willRejectH0(double signficanceLevel, boolean twoTails) {
+
+   /**
+    * The method reject null hypothesis if the p-value calculated from the sample is smaller than the significance level
+    * @param significanceLevel the significance level, usually about 0.05
+    * @param twoTails true if the testing is two tails; false otherwise
+    * @return true if the null hypothesis H_0 is rejected; false if H_0 fails to be rejected
+    */
+   public boolean willRejectH0(double significanceLevel, boolean twoTails) {
       if(twoTails){
-         return pValueTwoTails < signficanceLevel;
+         return pValueTwoTails < significanceLevel;
       } else {
-         return pValueOneTail < signficanceLevel;
+         return pValueOneTail < significanceLevel;
       }
    }
 

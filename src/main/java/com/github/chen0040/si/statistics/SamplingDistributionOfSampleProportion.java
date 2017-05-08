@@ -99,7 +99,7 @@ public class SamplingDistributionOfSampleProportion {
       return sampleSize;
    }
 
-   public Interval confidenceInterval(double confidenceLevel) {
+   public ConfidenceInterval confidenceInterval(double confidenceLevel) {
       if(confidenceLevel < 0 || confidenceLevel > 1) {
          throw new OutOfRangeException(confidenceLevel, 0, 1);
       }

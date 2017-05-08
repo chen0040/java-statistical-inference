@@ -84,6 +84,18 @@ public class SampleDistribution {
       this.successLabel = successLabel;
    }
 
+
+   public SampleDistribution(double sampleMean, int sampleSize, double sampleSd, String groupId) {
+      this.sampleMean = sampleMean;
+      this.sampleSize = sampleSize;
+      this.sampleSd = sampleSd;
+      this.sampleVariance = sampleSd * sampleSd;
+      this.sumOfSquares = sampleVariance * (sampleSize - 1);
+      this.isNumeric = true;
+      this.groupId = groupId;
+   }
+
+
    public double getProportion(){
       if(isNumeric()){
          throw new NotImplementedException();

@@ -100,7 +100,7 @@ public class SamplingDistributionOfSampleMean {
       return sampleSize;
    }
 
-   public Interval confidenceInterval(double confidenceLevel) {
+   public ConfidenceInterval confidenceInterval(double confidenceLevel) {
       if(confidenceLevel < 0 || confidenceLevel > 1) {
          throw new OutOfRangeException(confidenceLevel, 0, 1);
       }
@@ -112,15 +112,26 @@ public class SamplingDistributionOfSampleMean {
          double p_hi = 1.0 - p_lo;
          double Z = distribution.inverseCumulativeProbability(p_hi);
 
-         return new Interval(x_bar - Z * standardError, x_bar + Z * standardError);
+         return makeCI(new Interval(x_bar - Z * standardError, x_bar + Z * standardError), confidenceLevel);
       } else if(distributionFamily == DistributionFamily.StudentT) {
          TDistribution distribution = new TDistribution(df);
          double p_lo = (1.0 - confidenceLevel) / 2;
          double p_hi = 1.0 - p_lo;
          double t_df = distribution.inverseCumulativeProbability(p_hi);
-         return new Interval(x_bar - t_df * standardError, x_bar + t_df * standardError);
+         return makeCI(new Interval(x_bar - t_df * standardError, x_bar + t_df * standardError), confidenceLevel);
       } else {
          throw new NotImplementedException();
       }
+   }
+
+   private ConfidenceInterval makeCI(Interval interval, double confidenceLevel) {
+
+
+      StringBuilder sb = new StringBuilder();
+      sb.append("We are ").append(confidenceLevel * 100).append("% confident that");
+      sb.append(" the mean of \"").append(groupId).append("\" is ");
+      sb.append(interval);
+
+      return new ConfidenceInterval(interval, confidenceLevel, sb.toString());
    }
 }

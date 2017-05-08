@@ -64,7 +64,7 @@ public class Observation implements Serializable {
       return categoricalValue.get();
    }
 
-   public boolean containsXY(){
+   public boolean containsTwoNumericalVariables(){
       return x.isPresent() && y.isPresent();
    }
 

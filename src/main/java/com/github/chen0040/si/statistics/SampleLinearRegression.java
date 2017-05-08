@@ -9,10 +9,12 @@ import lombok.Setter;
 
 /**
  * Created by xschen on 8/5/2017.
+ * Explore the linear relationship between two numerical variables x and y in the form of:
+ * y = b_0 + x * b_1
  */
 @Getter
 @Setter
-public class SampleCorrelation {
+public class SampleLinearRegression {
 
    // sample mean of x
    private double xBar;
@@ -36,28 +38,28 @@ public class SampleCorrelation {
    // b_0 for y = b_0 + x * b_1
    private double intercept;
 
-   public SampleCorrelation(Sample sample1){
+   public SampleLinearRegression(Sample sample){
 
 
-      int sampleSize1 = sample1.countByGroupId(null);
+      int sampleSize = sample.countByGroupId(null);
 
-      if(!sample1.containsTwoNumericalVariables()) {
+      if(!sample.containsTwoNumericalVariables()) {
          throw new VariableWrongValueTypeException("Sample 1 should contain numeric variable x and y");
       }
 
-      TupleTwo<Double, Double> tuple = sample1.getObservations().stream()
+      TupleTwo<Double, Double> tuple = sample.getObservations().stream()
               .map(o -> new TupleTwo<>(o.getX(), o.getY()))
               .reduce((a, b) -> new TupleTwo<>(a._1() + b._1(), a._2() + b._2()))
               .get();
 
-      xBar = tuple._1() / sampleSize1;
-      yBar = tuple._2() / sampleSize1;
+      xBar = tuple._1() / sampleSize;
+      yBar = tuple._2() / sampleSize;
 
       double sum = 0;
       double sum_x = 0;
       double sum_y = 0;
-      for(int i=0; i < sampleSize1; ++i) {
-         Observation o = sample1.get(i);
+      for(int i=0; i < sampleSize; ++i) {
+         Observation o = sample.get(i);
          double x = o.getX();
          double y = o.getY();
 
@@ -69,8 +71,8 @@ public class SampleCorrelation {
          sum_y += y_d * y_d;
       }
 
-      sX = sum_x / (sampleSize1-1);
-      sY = sum_y / (sampleSize1-1);
+      sX = sum_x / (sampleSize-1);
+      sY = sum_y / (sampleSize-1);
 
       correlation = sum / (Math.sqrt(sum_x) * Math.sqrt(sum_y));
 

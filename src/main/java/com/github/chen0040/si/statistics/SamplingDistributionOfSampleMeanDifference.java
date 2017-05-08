@@ -3,6 +3,7 @@ package com.github.chen0040.si.statistics;
 
 import com.github.chen0040.si.enums.DistributionFamily;
 import com.github.chen0040.si.exceptions.VariableWrongValueTypeException;
+import com.github.chen0040.si.utils.Interval;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.distribution.TDistribution;
 import org.apache.commons.math3.exception.OutOfRangeException;

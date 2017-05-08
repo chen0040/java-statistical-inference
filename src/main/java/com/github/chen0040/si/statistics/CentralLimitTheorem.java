@@ -35,7 +35,7 @@ public class CentralLimitTheorem {
       }
 
       // observations in the sample must be randomly sampled or assigned
-      if(!sample.isRandomlySampledOrAssigned()) {
+      if(!sample.metaData().isRandomlySampledOrAssigned()) {
          logger.warn("0 (failed): observations in the sample must be randomly sampled or assigned");
          return false;
       } else {
@@ -44,8 +44,8 @@ public class CentralLimitTheorem {
 
       int n = sample.countByGroupId(groupId);
       // if sampling without replacement, then the sample size must be smaller than 10% of the true population under study
-      if(!sample.isSampledWithReplacement()){
-         if(n >= sample.getTruePopulationSize() * 10 / 100) {
+      if(!sample.metaData().isSampledWithReplacement()){
+         if(n >= sample.metaData().getTruePopulationSize() * 10 / 100) {
             logger.warn("if sampled without replacement, then the sample size must be smaller than 10% of the true population under study");
             return false;
          } else {
@@ -84,7 +84,7 @@ public class CentralLimitTheorem {
       }
 
       // observations in the sample must be randomly sampled or assigned
-      if(!sample.isRandomlySampledOrAssigned()) {
+      if(!sample.metaData().isRandomlySampledOrAssigned()) {
          logger.warn("1 (failed): observations in the sample must be randomly sampled or assigned");
          return false;
       } else {
@@ -93,8 +93,8 @@ public class CentralLimitTheorem {
 
       int n = sample.countByGroupId(groupId);
       // if sampling without replacement, then the sample size must be smaller than 10% of the true population under study
-      if(!sample.isSampledWithReplacement()){
-         if(n >= sample.getTruePopulationSize() * 10 / 100) {
+      if(!sample.metaData().isSampledWithReplacement()){
+         if(n >= sample.metaData().getTruePopulationSize() * 10 / 100) {
             logger.warn("1 (failed): if sampled without replacement, then the sample size must be smaller than 10% of the true population under study");
             return false;
          } else {

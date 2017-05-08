@@ -32,4 +32,15 @@ public class LeastSquaresLine {
       return y_bar - x_bar * slope;
    }
 
+
+   /**
+    * Return the R^2 of the least sqaures fit of y = b_0 + x * b_1, R^2 is the explained variability
+    * @param correlation
+    * @return R^2, the explain variability, between 0 and 1
+    */
+   public double calculateR2(double correlation){
+
+      return correlation * correlation;
+   }
+
 }

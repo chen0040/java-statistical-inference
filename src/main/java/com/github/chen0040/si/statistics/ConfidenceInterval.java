@@ -1,6 +1,7 @@
 package com.github.chen0040.si.statistics;
 
 
+import com.github.chen0040.si.utils.Interval;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;

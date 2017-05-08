@@ -1,9 +1,6 @@
 package com.github.chen0040.si.statistics;
 
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.io.Serializable;
 import java.util.Optional;
 
@@ -13,7 +10,8 @@ import java.util.Optional;
  */
 public class Observation implements Serializable {
 
-   private Optional<Double> numericValue = Optional.empty();
+   private Optional<Double> x = Optional.empty();
+   private Optional<Double> y = Optional.empty();
    private Optional<String> categoricalValue = Optional.empty();
 
    private String groupId = "";
@@ -25,12 +23,20 @@ public class Observation implements Serializable {
       categoricalValue = Optional.of(category);
    }
 
-   public void setValue(double numeric) {
+   public void setX(double numeric) {
       if(isCategorical()) {
          throw new RuntimeException("Observation is already marked as categorical");
       }
-      numericValue = Optional.of(numeric);
+      x = Optional.of(numeric);
    }
+
+   public void setY(double numeric) {
+      if(isCategorical()) {
+         throw new RuntimeException("Observation is already marked as categorical");
+      }
+      y = Optional.of(numeric);
+   }
+
 
    public void setGroupId(String groupId) {
       this.groupId = groupId;
@@ -41,19 +47,25 @@ public class Observation implements Serializable {
    }
 
    public boolean isNumeric(){
-      return numericValue.isPresent();
+      return x.isPresent();
    }
 
    public boolean isCategorical() {
       return categoricalValue.isPresent();
    }
 
-   public double getNumericValue() {
-      return numericValue.get();
+   public double getX() {
+      return x.get();
    }
+
+   public double getY() { return y.get(); }
 
    public String getCategoricalValue() {
       return categoricalValue.get();
+   }
+
+   public boolean containsXY(){
+      return x.isPresent() && y.isPresent();
    }
 
 

@@ -16,12 +16,8 @@ public class Sample {
    private final List<Observation> observations = new ArrayList<>();
    private Optional<Boolean> isNumeric = Optional.empty();
    private final Set<String> groups = new HashSet<>();
+   private SampleMetaData metaData = new SampleMetaData();
 
-
-   private boolean randomlySampledOrAssigned = true;
-   private boolean sampledWithReplacement = true;
-   // true population size, usually unknown and only used when sampled without replacement
-   private int truePopulationSize = -1;
 
    public void add(Observation observation) {
       if(isNumeric.isPresent()){
@@ -76,20 +72,18 @@ public class Sample {
       return groups.stream().collect(Collectors.toList());
    }
 
-   public boolean isRandomlySampledOrAssigned() {
-      return randomlySampledOrAssigned;
+
+   public SampleMetaData metaData(){
+      return metaData;
    }
 
-   public boolean isSampledWithReplacement(){
-      return sampledWithReplacement;
-   }
 
-   public int getTruePopulationSize(){
-      return truePopulationSize;
-   }
-
-   public void setTruePopulationSize(int truePopulationSize) {
-      this.truePopulationSize = truePopulationSize;
+   /**
+    * return true if the sample contain two numeric variable x and y
+    * @return
+    */
+   public boolean containsXY(){
+      return observations.get(0).containsXY();
    }
 
 

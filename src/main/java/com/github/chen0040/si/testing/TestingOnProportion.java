@@ -3,7 +3,7 @@ package com.github.chen0040.si.testing;
 
 import com.github.chen0040.si.enums.DistributionFamily;
 import com.github.chen0040.si.misc.Simulation;
-import com.github.chen0040.si.statistics.Count;
+import com.github.chen0040.si.utils.Count;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.math3.distribution.NormalDistribution;

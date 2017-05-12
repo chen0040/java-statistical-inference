@@ -47,7 +47,7 @@ public class TwoGroupCategoricalSampleKie {
          throw new RuntimeException("distribution is already provided for the categorical variable, cannot add observation");
       }
       Observation observation = new Observation();
-      observation.setValue(value);
+      observation.setCategory(value);
       observation.setGroupId(groupId);
       sample.add(observation);
       return this;

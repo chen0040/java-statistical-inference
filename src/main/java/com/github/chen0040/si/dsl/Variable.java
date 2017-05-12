@@ -12,17 +12,14 @@ public class Variable {
       this.name = name;
    }
 
-   public Variable setCategorical(boolean categorical) {
-      this.categorical = categorical;
-      return this;
-   }
-
    public String getName(){
       return name;
    }
 
 
    public VariablePair pair(Variable variableTwo) {
+      categorical = false;
+      variableTwo.categorical = false;
       return new VariablePair(this, variableTwo);
    }
 
@@ -50,7 +47,11 @@ public class Variable {
       categorical = false;
       return new CategoricalToNumericalSampleKie(this);
    }
-   
+
+   public CategoricalToCategoricalSampleKie moreThanTwoGroupCategoricalSample(){
+      categorical = false;
+      return new CategoricalToCategoricalSampleKie(this);
+   }
 
 
 

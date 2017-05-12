@@ -44,7 +44,11 @@ public class ChiSquareTest {
 
    }
 
-   public void run(ContingencyTable table, double significanceLevel) {
+   public ChiSquareTest run(ContingencyTable table){
+      return run(table, 0.0001);
+   }
+
+   public ChiSquareTest run(ContingencyTable table, double significanceLevel) {
 
       List<String> rows = table.rows();
       List<String> cols = table.columns();
@@ -69,6 +73,7 @@ public class ChiSquareTest {
 
       this.significanceLevel = significanceLevel;
 
+      return this;
    }
 
    public String getSummary(){

@@ -16,7 +16,7 @@ public class Observation implements Serializable {
 
    private String groupId = "";
 
-   public void setValue(String category) {
+   public void setCategory(String category) {
       if(isNumeric()) {
          throw new RuntimeException("Observation is already marked as numeric");
       }

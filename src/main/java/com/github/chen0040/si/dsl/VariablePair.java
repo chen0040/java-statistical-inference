@@ -15,8 +15,6 @@ public class VariablePair {
    }
 
    public PairedSampleKie numericalSample() {
-      variableOne.setCategorical(false);
-      variableTwo.setCategorical(false);
       return new PairedSampleKie(this);
    }
 }

@@ -14,27 +14,27 @@ import org.apache.commons.math3.distribution.NormalDistribution;
  */
 public class TestingOnProportionDifference {
 
-   private final String successLabel;
-   private final double pHat1;
-   private final double pHat2;
-   private final int n1;
-   private final int n2;
+   private String successLabel;
+   private double pHat1;
+   private double pHat2;
+   private int n1;
+   private int n2;
 
 
    // the "pooled" proportion assumes to be the true p under null assumption;
-   private final double pPooled;
+   private double pPooled;
 
    // standard error of p_1 - p_2 under null assumption;
-   private final double standardError;
+   private double standardError;
 
-   private final double Z;
+   private double Z;
 
-   private final double pValueOneTail;
-   private final double pValueTwoTails;
+   private double pValueOneTail;
+   private double pValueTwoTails;
 
-   private final DistributionFamily distributionFamily = DistributionFamily.Normal;
+   private DistributionFamily distributionFamily = DistributionFamily.Normal;
 
-   public TestingOnProportionDifference(String successLabel, double pHat1, double pHat2, int sampleSize1, int sampleSize2) {
+   public void run(String successLabel, double pHat1, double pHat2, int sampleSize1, int sampleSize2) {
 
       this.successLabel = successLabel;
       this.pHat1 = pHat1;

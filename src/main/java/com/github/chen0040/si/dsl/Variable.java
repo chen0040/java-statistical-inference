@@ -31,14 +31,19 @@ public class Variable {
       return new TwoGroupNumericalSampleKie(this, group1, group2);
    }
 
+   public TwoGroupCategoricalSampleKie twoGroupCategoricalSampleKie(String group1, String group2) {
+      categorical = true;
+      return new TwoGroupCategoricalSampleKie(this, group1, group2);
+   }
+
    public NumericalSampleKie numericalSample(){
       categorical = false;
       return new NumericalSampleKie(this);
    }
 
-   public CategoricalSampleKie categoricalSample(String value) {
+   public CategoricalSampleKie categoricalSample() {
       categorical = true;
-      return new CategoricalSampleKie(this).addObservation(value);
+      return new CategoricalSampleKie(this);
    }
 
 

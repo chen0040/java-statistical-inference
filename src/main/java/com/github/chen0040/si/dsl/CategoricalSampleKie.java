@@ -13,7 +13,9 @@ import com.github.chen0040.si.testing.TestingOnProportion;
  */
 public class CategoricalSampleKie {
    private final Variable variable;
+
    private Sample sample;
+
    private double sampleProportion;
    private int sampleSize;
    private String successLabel;
@@ -64,10 +66,9 @@ public class CategoricalSampleKie {
       if(sample != null) {
          TestingOnProportion test = new TestingOnProportion();
          SampleDistribution distribution =  new SampleDistribution(sample, value, groupId());
-         double xHat = distribution.getSampleMean();
-         double sd = distribution.getSampleSd();
+         double pHat = distribution.getProportion();
          int n = distribution.getSampleSize();
-         test.run(xHat, n, p);
+         test.run(pHat, n, p);
          return test;
       } else {
          TestingOnProportion test = new TestingOnProportion();

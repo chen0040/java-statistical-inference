@@ -67,6 +67,7 @@ public class TwoGroupNumericalSampleKie {
 
       Observation observation = new Observation();
       observation.setX(value);
+      observation.setGroupId(groupId);
       sample.add(observation);
 
       if(groupId.equals(group1Id)) {
@@ -114,7 +115,7 @@ public class TwoGroupNumericalSampleKie {
       return group2Id;
    }
 
-   public TestingOnValueDifference test4Difference() {
+   public TestingOnValueDifference test4GroupDifference() {
       if(sample != null) {
          TestingOnValueDifference test = new TestingOnValueDifference();
          SampleDistribution distribution1 = getSample1Distribution();

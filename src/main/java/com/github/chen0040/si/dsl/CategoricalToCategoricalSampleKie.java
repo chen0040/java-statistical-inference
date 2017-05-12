@@ -35,7 +35,7 @@ public class CategoricalToCategoricalSampleKie {
       return this;
    }
 
-   public ChiSquareTest test4Difference(){
+   public ChiSquareTest test4Independence(){
       if(sample != null){
          return new ChiSquareTest(sample);
       } else {

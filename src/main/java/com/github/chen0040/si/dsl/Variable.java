@@ -53,6 +53,11 @@ public class Variable {
       return new CategoricalToCategoricalSampleKie(this);
    }
 
+   public XYSampleKie regression(Variable y){
+      categorical = false;
+      return new XYSampleKie(this, y);
+   }
+
 
 
 }

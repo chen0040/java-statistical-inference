@@ -41,7 +41,7 @@ public class CategoricalToNumericalSampleKie {
       return this;
    }
 
-   public Anova test4DifferenceInGroups(){
+   public Anova test4Independence(){
       if(sample != null){
          return new Anova(sample);
       } else {

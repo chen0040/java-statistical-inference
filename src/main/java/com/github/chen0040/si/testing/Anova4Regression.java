@@ -49,6 +49,10 @@ public class Anova4Regression {
 
       SampleLinearRegression regression = new SampleLinearRegression(sample);
 
+      run(regression, sample);
+   }
+
+   public Anova4Regression run(SampleLinearRegression regression, Sample sample){
       double yBar = regression.getYBar();
       double b_0 = regression.getIntercept();
       double b_1 = regression.getSlope();
@@ -70,6 +74,8 @@ public class Anova4Regression {
       F = yMSG / yMSE;
 
       pValue = distribution.cumulativeProbability(F);
+
+      return this;
    }
 
    public String getSummary() {

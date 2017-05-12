@@ -14,9 +14,9 @@ public class VariablePair {
       this.variableTwo = variableTwo;
    }
 
-   public PairedSampleKie addPairedObservation(double value1, double value2) {
+   public PairedSampleKie numericalSample() {
       variableOne.setCategorical(false);
       variableTwo.setCategorical(false);
-      return new PairedSampleKie(this).addObservation(value1, value2);
+      return new PairedSampleKie(this);
    }
 }

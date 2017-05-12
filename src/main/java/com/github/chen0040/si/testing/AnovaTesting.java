@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * Created by xschen on 3/5/2017.
  *
- * ANOVA (Analysis of Variance)
+ * AnovaTesting (Analysis of Variance)
  * Conducted between one numerical variable and one categorical variable
  *
  * it is used to find whether there is a correlation between a numerical variable and a categorical variable for which the categorical
@@ -41,9 +41,9 @@ import java.util.Map;
  */
 @Getter
 @Setter
-public class ANOVA {
+public class AnovaTesting {
 
-   private static final Logger logger = LoggerFactory.getLogger(ANOVA.class);
+   private static final Logger logger = LoggerFactory.getLogger(AnovaTesting.class);
 
    // SST: sum of squares total
    // calculated as \sum^n_{i=1} (y_i - y_bar)^2
@@ -87,7 +87,7 @@ public class ANOVA {
 
    private double pValue;
 
-   public ANOVA(Sample sample) {
+   public AnovaTesting(Sample sample) {
       if(sample.isCategorical()) {
          logger.error("ANOVA can only be applied for sample that involves a numerical variable and a categorical variable");
          throw new NotImplementedException();
@@ -107,7 +107,7 @@ public class ANOVA {
       run(sampleDistributionTotal, sampleDistributionByGroupId, -1);
    }
 
-   public ANOVA() {
+   public AnovaTesting() {
 
    }
 

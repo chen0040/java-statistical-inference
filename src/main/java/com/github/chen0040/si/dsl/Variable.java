@@ -26,22 +26,21 @@ public class Variable {
       return new VariablePair(this, variableTwo);
    }
 
-   public NumericalSampleKie addObservation(double value){
-      return new NumericalSampleKie(this).addObservation(value);
-   }
-
-   public NumericalSampleKie fromSampleDistribution(double sampleMean, double sampleSd, int sampleSize) {
+   public TwoGroupNumericalSampleKie twoGroupNumericalSample(String group1, String group2){
       categorical = false;
-      return new NumericalSampleKie(this, sampleMean, sampleSd, sampleSize);
+      return new TwoGroupNumericalSampleKie(this, group1, group2);
    }
 
-   public CategoricalSampleKie addObservation(String value) {
+   public NumericalSampleKie numericalSample(){
+      categorical = false;
+      return new NumericalSampleKie(this);
+   }
+
+   public CategoricalSampleKie categoricalSample(String value) {
+      categorical = true;
       return new CategoricalSampleKie(this).addObservation(value);
    }
 
-   public CategoricalSampleKie fromSampleDistribution(String successLabel, double sampleProportion, int sampleSize) {
-      categorical = true;
-      return new CategoricalSampleKie(this, successLabel, sampleProportion, sampleSize);
-   }
+
 
 }

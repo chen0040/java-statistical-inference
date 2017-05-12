@@ -68,8 +68,8 @@ public class TestingOnProportionDifference {
 
    public String getSummary(){
       StringBuilder sb = new StringBuilder();
-      sb.append("group 1: sample mean: ").append(pHat1).append(" sample size: ").append(n1);
-      sb.append("\ngroup 2: sample mean: ").append(pHat2).append(" sample size: ").append(n2);
+      sb.append("group 1: sample proportion: ").append(pHat1).append(" sample size: ").append(n1);
+      sb.append("\ngroup 2: sample proportion: ").append(pHat2).append(" sample size: ").append(n2);
 
       sb.append("\nSE of sample difference distribution: ").append(standardError);
 

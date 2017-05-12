@@ -25,8 +25,8 @@ public class NumericalSampleKie {
       this.variable = variable;
    }
 
-   public NumericalSampleKie(Variable variable, double sampleMean, double sampleSd, int sampleSize) {
-      this.variable = variable;
+   public NumericalSampleKie fromSampleDistribution(double sampleMean, double sampleSd, int sampleSize) {
+
       this.sample = null;
       this.sampleMean = sampleMean;
       this.sampleSize = sampleSize;
@@ -34,6 +34,7 @@ public class NumericalSampleKie {
 
       sampleDistribution = new SampleDistribution(sampleMean, sampleSize, sampleSd, groupId());
       samplingDistributionOfSampleMean = new SamplingDistributionOfSampleMean(sampleMean, sampleSize, sampleSd, groupId());
+      return this;
    }
 
    public NumericalSampleKie addObservation(double value){
@@ -73,7 +74,7 @@ public class NumericalSampleKie {
       return variable.getName();
    }
 
-   public TestingOnValue isMeanEqualTo(double mean) {
+   public TestingOnValue test4MeanEqualTo(double mean) {
       if(sample != null) {
          TestingOnValue test = new TestingOnValue();
          SampleDistribution distribution = getSampleDistribution();

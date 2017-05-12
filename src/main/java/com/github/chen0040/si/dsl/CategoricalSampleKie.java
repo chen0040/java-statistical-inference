@@ -16,7 +16,7 @@ public class CategoricalSampleKie {
    private Sample sample;
    private double sampleProportion;
    private int sampleSize;
-   private final String successLabel;
+   private String successLabel;
 
    public CategoricalSampleKie(Variable variable) {
       this.variable = variable;
@@ -25,11 +25,11 @@ public class CategoricalSampleKie {
    }
 
 
-   public CategoricalSampleKie(Variable variable, String successLabel, double sampleProportion, int sampleSize) {
-      this.variable = variable;
+   public CategoricalSampleKie fromSampleDistribution(String successLabel, double sampleProportion, int sampleSize) {
       this.sampleProportion = sampleProportion;
       this.sampleSize = sampleSize;
       this.successLabel = successLabel;
+      return this;
    }
 
 

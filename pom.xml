@@ -511,6 +511,11 @@
             <version>${commons-math.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.chen0040</groupId>
+            <artifactId>java-data-frame</artifactId>
+            <version>1.0.5</version>
+        </dependency>
 
 
 

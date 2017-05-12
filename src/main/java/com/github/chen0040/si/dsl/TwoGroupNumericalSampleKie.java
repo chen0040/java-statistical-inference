@@ -11,6 +11,7 @@ import com.github.chen0040.si.testing.TestingOnValueDifference;
  */
 public class TwoGroupNumericalSampleKie {
    private final Variable variable;
+   private final Variable groupVariable;
    private Sample sample = new Sample();
 
    private final String group1Id;
@@ -29,8 +30,10 @@ public class TwoGroupNumericalSampleKie {
 
    private SamplingDistributionOfSampleMeanDifference samplingDistributionOfSampleMeanDifference = null;
 
-   public TwoGroupNumericalSampleKie(Variable variable, String group1Id, String group2Id) {
+   public TwoGroupNumericalSampleKie(Variable variable, Variable groupVariable, String group1Id, String group2Id) {
       this.variable = variable;
+      this.groupVariable = groupVariable;
+
       this.group1Id = group1Id;
       this.group2Id = group2Id;
    }

@@ -23,14 +23,14 @@ public class Variable {
       return new VariablePair(this, variableTwo);
    }
 
-   public TwoGroupNumericalSampleKie twoGroupNumericalSample(String group1, String group2){
+   public TwoGroupNumericalSampleKie twoGroupNumericalSample(Variable groupVariable, String group1, String group2){
       categorical = false;
-      return new TwoGroupNumericalSampleKie(this, group1, group2);
+      return new TwoGroupNumericalSampleKie(this, groupVariable, group1, group2);
    }
 
-   public TwoGroupCategoricalSampleKie twoGroupCategoricalSampleKie(String group1, String group2) {
+   public TwoGroupCategoricalSampleKie twoGroupCategoricalSampleKie(Variable groupVariable, String group1, String group2) {
       categorical = true;
-      return new TwoGroupCategoricalSampleKie(this, group1, group2);
+      return new TwoGroupCategoricalSampleKie(this, groupVariable, group1, group2);
    }
 
    public NumericalSampleKie numericalSample(){
@@ -43,14 +43,14 @@ public class Variable {
       return new CategoricalSampleKie(this);
    }
 
-   public CategoricalToNumericalSampleKie moreThanTwoGroupNumericalSample(){
+   public CategoricalToNumericalSampleKie moreThanTwoGroupNumericalSample(Variable groupVariable){
       categorical = false;
-      return new CategoricalToNumericalSampleKie(this);
+      return new CategoricalToNumericalSampleKie(this, groupVariable);
    }
 
-   public CategoricalToCategoricalSampleKie moreThanTwoGroupCategoricalSample(){
+   public CategoricalToCategoricalSampleKie moreThanTwoGroupCategoricalSample(Variable groupVariable){
       categorical = false;
-      return new CategoricalToCategoricalSampleKie(this);
+      return new CategoricalToCategoricalSampleKie(this, groupVariable);
    }
 
    public XYSampleKie regression(Variable y){

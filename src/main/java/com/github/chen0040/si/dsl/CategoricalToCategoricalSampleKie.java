@@ -12,11 +12,14 @@ import com.github.chen0040.si.testing.ChiSquareTest;
  */
 public class CategoricalToCategoricalSampleKie {
    private final Variable variable;
+   private final Variable groupVariable;
+
    private Sample sample;
    private ContingencyTable contingencyTable;
 
-   public CategoricalToCategoricalSampleKie(Variable variable){
+   public CategoricalToCategoricalSampleKie(Variable variable, Variable groupVariable){
       this.variable = variable;
+      this.groupVariable = variable;
    }
 
    public CategoricalToCategoricalSampleKie addObservation(String value, String groupId){

@@ -14,13 +14,16 @@ import java.util.Map;
  */
 public class CategoricalToNumericalSampleKie {
    private final Variable variable;
+   private final Variable groupVariable;
+
    private Sample sample;
 
    private SampleDistribution sampleDistributionTotal;
    private Map<String, SampleDistribution> sampleDistributionByGroupId;
 
-   public CategoricalToNumericalSampleKie(Variable variable) {
+   public CategoricalToNumericalSampleKie(Variable variable, Variable groupVariable) {
       this.variable = variable;
+      this.groupVariable = groupVariable;
    }
 
    public CategoricalToNumericalSampleKie addObservation(double value, String groupId) {

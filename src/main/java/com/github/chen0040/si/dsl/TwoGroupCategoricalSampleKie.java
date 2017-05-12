@@ -10,6 +10,8 @@ import com.github.chen0040.si.testing.TestingOnProportionDifference;
  */
 public class TwoGroupCategoricalSampleKie {
    private final Variable variable;
+   private final Variable groupVariable;
+
    private final String group1Id;
    private final String group2Id;
 
@@ -23,8 +25,10 @@ public class TwoGroupCategoricalSampleKie {
 
    private String successLabel;
 
-   public TwoGroupCategoricalSampleKie(Variable variable, String group1Id, String group2Id) {
+   public TwoGroupCategoricalSampleKie(Variable variable, Variable groupVariable, String group1Id, String group2Id) {
       this.variable = variable;
+      this.groupVariable = groupVariable;
+
       sample = new Sample();
       this.successLabel = null;
       this.group1Id = group1Id;

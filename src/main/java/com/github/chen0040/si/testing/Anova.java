@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * Created by xschen on 3/5/2017.
  *
- * AnovaTesting (Analysis of Variance)
+ * Anova (Analysis of Variance)
  * Conducted between one numerical variable and one categorical variable
  *
  * it is used to find whether there is a correlation between a numerical variable and a categorical variable for which the categorical
@@ -41,9 +41,9 @@ import java.util.Map;
  */
 @Getter
 @Setter
-public class AnovaTesting {
+public class Anova {
 
-   private static final Logger logger = LoggerFactory.getLogger(AnovaTesting.class);
+   private static final Logger logger = LoggerFactory.getLogger(Anova.class);
 
    // SST: sum of squares total
    // calculated as \sum^n_{i=1} (y_i - y_bar)^2
@@ -87,7 +87,7 @@ public class AnovaTesting {
 
    private double pValue;
 
-   public AnovaTesting(Sample sample) {
+   public Anova(Sample sample) {
       if(sample.isCategorical()) {
          logger.error("ANOVA can only be applied for sample that involves a numerical variable and a categorical variable");
          throw new NotImplementedException();
@@ -107,15 +107,15 @@ public class AnovaTesting {
       run(sampleDistributionTotal, sampleDistributionByGroupId, -1);
    }
 
-   public AnovaTesting() {
+   public Anova() {
 
    }
 
-   public void run(SampleDistribution sampleDistributionTotal, Map<String, SampleDistribution> sampleDistributionByGroupId){
-      run(sampleDistributionTotal, sampleDistributionByGroupId, -1);
+   public Anova run(SampleDistribution sampleDistributionTotal, Map<String, SampleDistribution> sampleDistributionByGroupId){
+      return run(sampleDistributionTotal, sampleDistributionByGroupId, -1);
    }
 
-   public void run(SampleDistribution sampleDistributionTotal, Map<String, SampleDistribution> sampleDistributionByGroupId, double significanceLevel){
+   public Anova run(SampleDistribution sampleDistributionTotal, Map<String, SampleDistribution> sampleDistributionByGroupId, double significanceLevel){
 
       this.significanceLevel = significanceLevel;
 
@@ -146,6 +146,8 @@ public class AnovaTesting {
 
       pValue = 1 - fDistribution.cumulativeProbability(F);
 
+      return this;
+
    }
 
    public String getSummary() {
@@ -168,6 +170,11 @@ public class AnovaTesting {
 
          boolean rejectH0 = pValue < significanceLevel;
          sb.append("\nIf the significance level is ").append(significanceLevel).append(", the null hypothesis is ").append(rejectH0 ? "rejected as p-value is smaller than that" : "failed to be rejected");
+         if(rejectH0){
+            sb.append("\nIn other words, the categorical variable has no effect on the numerical variable");
+         } else {
+            sb.append("\nIn other words, there is a correlation between the categorical variable (explanatory) numerical variable (response)");
+         }
       }
 
       return sb.toString();

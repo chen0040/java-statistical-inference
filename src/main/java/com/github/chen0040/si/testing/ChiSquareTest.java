@@ -81,6 +81,11 @@ public class ChiSquareTest {
       if(significanceLevel > 0){
          boolean rejectH0 = pValue < significanceLevel;
          sb.append("\nif the significance level is ").append(significanceLevel).append(", then ").append(rejectH0 ? "two categorical variables are dependent" : "two categorical variables are independent");
+         if(rejectH0){
+            sb.append("\nIn other words, the two categorical variables are independent of each other");
+         } else {
+            sb.append("\nIn other words, there is a correlation between the two categorical variables");
+         }
       }
       return sb.toString();
    }

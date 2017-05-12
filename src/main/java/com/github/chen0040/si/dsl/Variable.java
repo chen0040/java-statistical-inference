@@ -50,6 +50,7 @@ public class Variable {
       categorical = false;
       return new CategoricalToNumericalSampleKie(this);
    }
+   
 
 
 

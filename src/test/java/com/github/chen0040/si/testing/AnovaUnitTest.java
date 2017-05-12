@@ -22,7 +22,7 @@ public class AnovaUnitTest {
    private SampleDistribution sampleDistributionTotal;
    private Map<String, SampleDistribution> sampleDistributionByGroupId = new HashMap<>();
 
-   private AnovaTesting anova;
+   private Anova anova;
 
 
 
@@ -57,7 +57,7 @@ public class AnovaUnitTest {
 
    @Test
    public void test_independence_between_numerical_and_categorical_variables() {
-      AnovaTesting anova = new AnovaTesting();
+      Anova anova = new Anova();
       anova.run(sampleDistributionTotal, sampleDistributionByGroupId, 0.0001);
 
       assertThat(anova.getSumOfSquaresGroup()).isCloseTo(236.56, within(1.0));

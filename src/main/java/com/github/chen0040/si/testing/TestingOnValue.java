@@ -91,7 +91,7 @@ public class TestingOnValue {
          NormalDistribution distribution = new NormalDistribution(0.0, 1.0);
          double Z = (xHat - xNull) / standardError;
 
-         double cp = distribution.cumulativeProbability(Z);
+         double cp = distribution.cumulativeProbability(Math.abs(Z));
          pValueOneTail = 1 - cp;
          pValueTwoTails = pValueOneTail * 2;
 
@@ -101,7 +101,8 @@ public class TestingOnValue {
 
          double t_df = (xHat - xNull) / standardError;
 
-         double cp = distribution.cumulativeProbability(t_df);
+
+         double cp = distribution.cumulativeProbability(Math.abs(t_df));
          pValueOneTail = 1 - cp;
          pValueTwoTails = pValueOneTail * 2;
       }
@@ -126,15 +127,15 @@ public class TestingOnValue {
    public String getSummary() {
       StringBuilder sb = new StringBuilder();
 
-      sb.append("Sample mean: ").append(xHat).append(" Sample size: ").append(sampleSize);
+      sb.append("Sample mean: ").append(xHat).append("Sample sd: ").append(sampleSd).append(" Sample size: ").append(sampleSize);
       sb.append("\nDistribution: ").append(distributionFamily);
       sb.append("\np-value (one-tail): ").append(pValueOneTail);
       sb.append("\np-value (two-tails): ").append(pValueTwoTails);
 
       if(significanceLevel > 0) {
-         sb.append("\nSuppose significance level is ").append(significanceLevel);
-         sb.append("\n\tpopulation proportion is ").append(pValueOneTail < significanceLevel ? "!=" : "==").append(" ").append(xNull).append(" under one-tail test");
-         sb.append("\n\tpopulation proportion is ").append(pValueTwoTails < significanceLevel ? "!=" : "==").append(" ").append(xNull).append(" under two-tails test");
+         sb.append("\nSuppose significance level is ").append(significanceLevel).append(", it is possible that:");
+         sb.append("\n\t1) population mean ").append(pValueOneTail < significanceLevel ? "!=" : "==").append(" ").append(xNull).append(" under one-tail test");
+         sb.append("\n\t2) population mean ").append(pValueTwoTails < significanceLevel ? "!=" : "==").append(" ").append(xNull).append(" under two-tails test");
       }
 
       return sb.toString();

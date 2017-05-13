@@ -1,6 +1,8 @@
 package com.github.chen0040.si.dsl;
 
 
+import com.github.chen0040.data.frame.DataFrame;
+import com.github.chen0040.data.frame.DataRow;
 import com.github.chen0040.si.statistics.*;
 import com.github.chen0040.si.testing.TestingOnValue;
 
@@ -44,11 +46,21 @@ public class NumericalSampleKie {
 
       Observation observation = new Observation();
       observation.setX(value);
+      observation.setGroupId(groupId());
       sample.add(observation);
 
       sampleDistribution = null;
       samplingDistributionOfSampleMean = null;
 
+      return this;
+   }
+
+   public NumericalSampleKie addObservations(DataFrame dataFrame){
+      for(int i=0; i < dataFrame.rowCount(); ++i){
+         DataRow row = dataFrame.row(i);
+         double value = row.getCell(variable.getName());
+         addObservation(value);
+      }
       return this;
    }
 
@@ -87,6 +99,25 @@ public class NumericalSampleKie {
          TestingOnValue test = new TestingOnValue();
          test.run(sampleMean, sampleSd, sampleSize, mean);
          return test;
+      }
+   }
+
+   public double getSampleMean(){
+      return getSampleDistribution().getSampleMean();
+   }
+
+   public double getSampleSd(){
+      return getSampleDistribution().getSampleSd();
+   }
+
+   public double getSampleSize(){
+      return getSampleDistribution().getSampleSize();
+   }
+
+
+   public void addObservations(double[] values) {
+      for(Double value : values){
+         addObservation(value);
       }
    }
 }

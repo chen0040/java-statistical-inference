@@ -64,14 +64,14 @@ public class NumericalSampleKie {
       return this;
    }
 
-   private SampleDistribution getSampleDistribution(){
+   public SampleDistribution getSampleDistribution(){
       if(sampleDistribution == null) {
          sampleDistribution = new SampleDistribution(sample, groupId());
       }
       return sampleDistribution;
    }
 
-   private SamplingDistributionOfSampleMean getSamplingDistribution(){
+   public SamplingDistributionOfSampleMean getSamplingDistribution(){
       if(samplingDistributionOfSampleMean == null) {
          samplingDistributionOfSampleMean = new SamplingDistributionOfSampleMean(getSampleDistribution());
       }

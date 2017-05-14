@@ -45,6 +45,8 @@ public class TestingOnProportion {
 
    private int simulationCount = 100;
 
+   private String successLabel = "";
+
 
    // pHat: observed sample proportion
    // p_null: expected proportion proposed by the null hypothesis
@@ -52,8 +54,8 @@ public class TestingOnProportion {
 
    }
 
-   public void run(double pHat, int sampleSize, double p){
-      run(pHat, sampleSize, p, 0.05);
+   public void run(String successLabel, double pHat, int sampleSize, double p){
+      run(successLabel, pHat, sampleSize, p, 0.05);
    }
 
 
@@ -64,10 +66,11 @@ public class TestingOnProportion {
     * @param pNull the null value $p_0$ for true $p$ of the population under $H_0$
     * @param significanceLevel the significance level $alpha$ which is usually 0.05
     */
-   public void run(double pHat, int sampleSize, double pNull, double significanceLevel) {
+   public void run(String successLabel, double pHat, int sampleSize, double pNull, double significanceLevel) {
 
       this.pHat = pHat;
       this.pNull = pNull;
+      this.successLabel = successLabel;
 
       this.sampleSize = sampleSize;
 
@@ -78,8 +81,13 @@ public class TestingOnProportion {
          distributionFamily = DistributionFamily.SimulationOnly;
          List<Double> proportions = Simulation.binomial(pNull, sampleSize, simulationCount);
 
-         double cp = Count.cumulativeProbability(proportions, pHat);
-         System.out.println(cp);
+         double cp = 0;
+         if(pHat > 0.5) {
+            cp = Count.cumulativeProbability(proportions, pHat);
+         } else {
+            cp = 1 - Count.cumulativeProbability(proportions, pHat);
+         }
+
          pValueOneTail = 1 - cp;
          pValueTwoTails = pValueOneTail * 2;
 
@@ -91,7 +99,7 @@ public class TestingOnProportion {
          double Z = (pHat - pNull) / standardError;
 
          NormalDistribution distribution = new NormalDistribution(0, 1.0);
-         double cp = distribution.cumulativeProbability(Z);
+         double cp = distribution.cumulativeProbability(Math.abs(Z));
          pValueOneTail = 1 - cp;
          pValueTwoTails = pValueOneTail * 2;
 
@@ -103,7 +111,7 @@ public class TestingOnProportion {
    }
 
    private double calculateStandardError(double p, double n ){
-      return Math.sqrt(p * (p-1) / n);
+      return Math.sqrt(p * (1-p) / n);
    }
 
    /**
@@ -130,8 +138,8 @@ public class TestingOnProportion {
 
       if(significanceLevel > 0) {
          sb.append("\nSuppose significance level is ").append(significanceLevel);
-         sb.append("\n\tpopulation proportion is ").append(pValueOneTail < significanceLevel ? "!=" : "==").append(" ").append(pNull).append(" under one-tail test");
-         sb.append("\n\tpopulation proportion is ").append(pValueTwoTails < significanceLevel ? "!=" : "==").append(" ").append(pNull).append(" under two-tails test");
+         sb.append("\n\t1) population proportion of \"").append(successLabel).append("\" is likely ").append(pValueOneTail < significanceLevel ? "not" : "").append(" to be ").append(pNull).append(" under one-tail test");
+         sb.append("\n\t2) population proportion is \"").append(successLabel).append("\" is likely ").append(pValueTwoTails < significanceLevel ? "not" : "").append(" to be ").append(pNull).append(" under two-tails test");
       }
 
       return sb.toString();

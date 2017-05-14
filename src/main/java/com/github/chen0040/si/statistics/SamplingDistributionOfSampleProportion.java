@@ -35,16 +35,19 @@ public class SamplingDistributionOfSampleProportion {
    // degrees of freedom of p_bar
    private final double df;
 
+   private final String successLabel;
+
    private int simulationCount = 100;
 
    public SamplingDistributionOfSampleProportion(SampleDistribution sampleDistribution) {
-      if(!sampleDistribution.isNumeric()) {
+      if(sampleDistribution.isNumeric()) {
          throw new VariableWrongValueTypeException("Sampling distribution for sample proportions is not defined for numeric variable");
       }
 
       double p = sampleDistribution.getProportion();
       this.sampleProportionPointEstimate = p;
       this.sampleSize = sampleDistribution.getSampleSize();
+      this.successLabel = sampleDistribution.getSuccessLabel();
 
       this.df = sampleSize - 1;
 
@@ -61,9 +64,10 @@ public class SamplingDistributionOfSampleProportion {
       this.groupId = sampleDistribution.getGroupId();
    }
 
-   public SamplingDistributionOfSampleProportion(double p, int sampleSize, String groupId) {
+   public SamplingDistributionOfSampleProportion(String successLabel, double p, int sampleSize, String groupId) {
 
 
+      this.successLabel = successLabel;
       this.sampleProportionPointEstimate = p;
       this.sampleSize = sampleSize;
 
@@ -130,10 +134,17 @@ public class SamplingDistributionOfSampleProportion {
 
       StringBuilder sb = new StringBuilder();
       sb.append("We are ").append(confidenceLevel * 100).append("% confident that");
-      sb.append(" the proportion of \"").append(groupId).append("\" is ");
+      sb.append(" the proportion of \"(").append(groupId).append(") is ").append(successLabel).append("\" is ");
       sb.append(interval);
 
       return new ConfidenceInterval(interval, confidenceLevel, sb.toString());
+   }
+
+   @Override
+   public String toString(){
+      StringBuilder sb = new StringBuilder();
+      sb.append("P(").append(groupId).append("=").append(successLabel).append(") ~ ").append(distributionFamily).append("(mu.estimate=").append(sampleProportionPointEstimate).append(", SE=").append(standardError).append(")");
+      return sb.toString();
    }
 
 

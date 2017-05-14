@@ -134,8 +134,8 @@ public class TestingOnValue {
 
       if(significanceLevel > 0) {
          sb.append("\nSuppose significance level is ").append(significanceLevel).append(", it is possible that:");
-         sb.append("\n\t1) population mean ").append(pValueOneTail < significanceLevel ? "!=" : "==").append(" ").append(xNull).append(" under one-tail test");
-         sb.append("\n\t2) population mean ").append(pValueTwoTails < significanceLevel ? "!=" : "==").append(" ").append(xNull).append(" under two-tails test");
+         sb.append("\n\t1) population mean ").append(pValueOneTail < significanceLevel ? "not" : "").append(" ").append(xNull).append(" under one-tail test");
+         sb.append("\n\t2) population mean ").append(pValueTwoTails < significanceLevel ? "not" : "").append(" ").append(xNull).append(" under two-tails test");
       }
 
       return sb.toString();

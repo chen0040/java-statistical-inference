@@ -95,6 +95,18 @@ public class SampleDistribution {
       this.groupId = groupId;
    }
 
+   public SampleDistribution(String successLabel, double sampleProportion, int sampleSize, String groupId) {
+      this.proportion = sampleMean;
+      this.successLabel = successLabel;
+      this.sampleSize = sampleSize;
+      this.sampleVariance = sampleSize * ( 1 - proportion) * proportion;
+      this.sampleMean = proportion * sampleSize;
+      this.sampleSd = Math.sqrt(sampleVariance);
+      this.sumOfSquares = sampleVariance * (sampleSize - 1);
+      this.isNumeric = false;
+      this.groupId = groupId;
+   }
+
 
    public double getProportion(){
       if(isNumeric()){

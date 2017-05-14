@@ -134,4 +134,11 @@ public class SamplingDistributionOfSampleMean {
 
       return new ConfidenceInterval(interval, confidenceLevel, sb.toString());
    }
+
+   @Override
+   public String toString(){
+      StringBuilder sb = new StringBuilder();
+      sb.append(groupId).append(" ~ ").append(distributionFamily).append("(mu.estimate=").append(sampleMeanPointEstimate).append(", SE=").append(standardError).append(")");
+      return sb.toString();
+   }
 }

@@ -43,6 +43,7 @@ public class CategoricalSampleKie {
       }
       Observation observation = new Observation();
       observation.setCategory(value);
+      observation.setGroupId(groupId());
       sample.add(observation);
       return this;
    }
@@ -51,6 +52,13 @@ public class CategoricalSampleKie {
       for(int i=0; i < dataFrame.rowCount(); ++i){
          DataRow row = dataFrame.row(i);
          String value = row.getCategoricalCell(variable.getName());
+         addObservation(value);
+      }
+      return this;
+   }
+
+   public CategoricalSampleKie addObservations(String[] values){
+      for(String value : values){
          addObservation(value);
       }
       return this;
@@ -65,12 +73,24 @@ public class CategoricalSampleKie {
       if(successLabel != null && !successLabel.equals(value)){
          throw new RuntimeException("distribution is already provided with the success label that is different that the parameter");
       }
-      SampleDistribution sampleDistribution = new SampleDistribution(sample, value, groupId());
-      SamplingDistributionOfSampleProportion sds = new SamplingDistributionOfSampleProportion(sampleDistribution);
+      SamplingDistributionOfSampleProportion sds = getSamplingDistribution(value);
       return new Proportion(sds);
    }
 
-   public TestingOnProportion isProportionEqualTo(String value, double p) {
+   public SampleDistribution getSampleDistribution(String value) {
+      if(sample == null){
+         return new SampleDistribution(successLabel, sampleProportion, sampleSize, groupId());
+      } else {
+         return new SampleDistribution(sample, value, groupId());
+      }
+   }
+
+   public SamplingDistributionOfSampleProportion getSamplingDistribution(String value) {
+      SampleDistribution sampleDistribution = getSampleDistribution(value);
+      return  new SamplingDistributionOfSampleProportion(sampleDistribution);
+   }
+
+   public TestingOnProportion test4ProportionEqualTo(String value, double p) {
       if(successLabel != null && !successLabel.equals(value)){
          throw new RuntimeException("distribution is already provided with the success label that is different that the parameter");
       }
@@ -80,14 +100,33 @@ public class CategoricalSampleKie {
          SampleDistribution distribution =  new SampleDistribution(sample, value, groupId());
          double pHat = distribution.getProportion();
          int n = distribution.getSampleSize();
-         test.run(pHat, n, p);
+         test.run(value, pHat, n, p);
          return test;
       } else {
          TestingOnProportion test = new TestingOnProportion();
-         test.run(sampleProportion, sampleSize, p);
+         test.run(value, sampleProportion, sampleSize, p);
          return test;
       }
    }
 
 
+   public double getSampleMean(String value) {
+      return getSampleDistribution(value).getSampleMean();
+   }
+
+   public double getSampleProportion(String value) {
+      return getSampleDistribution(value).getProportion();
+   }
+
+   public double getSampleSd(String value) {
+      return getSampleDistribution(value).getSampleSd();
+   }
+
+   public double getSampleSize(){
+      if(sample != null) {
+         return sample.countByGroupId(groupId());
+      } else {
+         return sampleSize;
+      }
+   }
 }

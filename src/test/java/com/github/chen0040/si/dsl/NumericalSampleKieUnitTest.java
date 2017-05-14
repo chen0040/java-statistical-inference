@@ -38,7 +38,9 @@ public class NumericalSampleKieUnitTest {
       System.out.println("sample.sd: " + kie.getSampleSd());
       System.out.println("sample.size: " + kie.getSampleSize());
 
-      System.out.println("Confidence interval for the " + variableName + ": " + confidenceInterval);
+      System.out.println("sampling distribution: " + kie.getSamplingDistribution());
+
+      System.out.println("95% confidence interval: " + confidenceInterval);
 
       System.out.println("========================================================");
 
@@ -64,7 +66,9 @@ public class NumericalSampleKieUnitTest {
       System.out.println("sample.sd: " + kie.getSampleSd());
       System.out.println("sample.size: " + kie.getSampleSize());
 
-      System.out.println("Confidence interval for the " + variableName + ": " + confidenceInterval);
+      System.out.println("sampling distribution: " + kie.getSamplingDistribution());
+
+      System.out.println("95% confidence interval: " + confidenceInterval);
 
       System.out.println("========================================================");
 

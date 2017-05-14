@@ -86,7 +86,7 @@ public class TestingOnValueDifference {
          double t_df = ((xHat1 - xHat2) - nullValue) / SE;
 
          TDistribution distribution = new TDistribution(df);
-         double cp = distribution.cumulativeProbability(t_df);
+         double cp = distribution.cumulativeProbability(Math.abs(t_df));
          pValueOneTail = 1 - cp;
          pValueTwoTails = pValueOneTail * 2;
          testStatistic = t_df;
@@ -94,7 +94,7 @@ public class TestingOnValueDifference {
       } else {
          double Z = ((xHat1 - xHat2) - nullValue) / SE;
          NormalDistribution distribution = new NormalDistribution(0, 1.0);
-         double cp = distribution.cumulativeProbability(Z);
+         double cp = distribution.cumulativeProbability(Math.abs(Z));
          pValueOneTail = 1 - cp;
          pValueTwoTails = pValueOneTail * 2;
          testStatistic = Z;

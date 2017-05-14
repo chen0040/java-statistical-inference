@@ -20,7 +20,7 @@ public class TestingOnProportionUnitTest {
       double p_null = 0.5; // under H0, octopus Paul is doing random guess
 
       TestingOnProportion test = new TestingOnProportion();
-      test.run(p_hat, n, p_null);
+      test.run("GUESS CORRECTLY", p_hat, n, p_null);
 
       double significanceLevel = 0.05;
       boolean twoTails = true;

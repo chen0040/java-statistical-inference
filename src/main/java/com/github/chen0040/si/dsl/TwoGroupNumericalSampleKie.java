@@ -1,6 +1,8 @@
 package com.github.chen0040.si.dsl;
 
 
+import com.github.chen0040.data.frame.DataFrame;
+import com.github.chen0040.data.frame.DataRow;
 import com.github.chen0040.si.statistics.*;
 import com.github.chen0040.si.testing.TestingOnValue;
 import com.github.chen0040.si.testing.TestingOnValueDifference;
@@ -98,7 +100,7 @@ public class TwoGroupNumericalSampleKie {
       return sample2Distribution;
    }
 
-   private SamplingDistributionOfSampleMeanDifference getSamplingDistribution(){
+   public SamplingDistributionOfSampleMeanDifference getSamplingDistribution(){
       if(samplingDistributionOfSampleMeanDifference == null) {
          samplingDistributionOfSampleMeanDifference = new SamplingDistributionOfSampleMeanDifference(getSample1Distribution(),
                  getSample2Distribution());
@@ -136,5 +138,41 @@ public class TwoGroupNumericalSampleKie {
          test.run(sample1Mean, sample2Mean, sample1Sd, sample2Sd, sample1Size, sample2Size);
          return test;
       }
+   }
+
+
+   public void addObservations(DataFrame dataFrame) {
+      for(int i=0; i < dataFrame.rowCount(); ++i){
+         DataRow row = dataFrame.row(i);
+         String groupId = row.getCategoricalCell(groupVariable.getName());
+         if(groupId.equals(group1Id) || groupId.equals(group2Id)){
+            double value = row.getCell(variable.getName());
+            addObservation(value, groupId);
+         }
+      }
+   }
+   
+   public double getSample1Mean(){
+      return getSample1Distribution().getSampleMean();
+   }
+   
+   public double getSample1Sd(){
+      return getSample1Distribution().getSampleSd();
+   }
+   
+   public double getSample1Size(){
+      return getSample1Distribution().getSampleSize();
+   }
+
+   public double getSample2Mean(){
+      return getSample2Distribution().getSampleMean();
+   }
+
+   public double getSample2Sd(){
+      return getSample2Distribution().getSampleSd();
+   }
+
+   public double getSample2Size(){
+      return getSample2Distribution().getSampleSize();
    }
 }

@@ -25,6 +25,7 @@ public class NumericalSampleKieUnitTest {
       String variableName = "Decrease";
       InputStream inputStream = FileUtils.getResource("calcium.dat");
       DataFrame dataFrame = DataQuery.csv().from(inputStream)
+              .skipRows(33)
               .selectColumn(3).asNumeric().asInput(variableName).build();
 
       Variable variable = new Variable(variableName);

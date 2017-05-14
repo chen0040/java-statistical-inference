@@ -24,6 +24,7 @@ public class PairedSampleKieUnitTest {
 
       InputStream inputStream = FileUtils.getResource("calcium-paired.dat");
       DataFrame dataFrame = DataQuery.csv().from(inputStream)
+              .skipRows(1)
               .selectColumn(1).asNumeric().asInput("Begin")
               .selectColumn(2).asNumeric().asInput("End")
               .build();

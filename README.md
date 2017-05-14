@@ -173,3 +173,43 @@ System.out.println("========================================================");
 System.out.println(confidenceInterval.getSummary());
 System.out.println(test.getSummary());
 ```
+
+### Samples from Two Different Population on a Single Numerical Variable
+
+The sample below shows the statistical inference from samples from two different population (e.g., from two different experiment setup) on a numerical variable:
+
+```java
+Variable variable = new Variable("Decrease");
+TwoGroupNumericalSampleKie kie = variable.twoGroupNumericalSample(new Variable("Treatment"), "Calcium", "Placebo");
+
+InputStream inputStream = FileUtils.getResource("calcium.dat");
+DataFrame dataFrame = DataQuery.csv().from(inputStream)
+      .skipRows(33)
+      .selectColumn(0).asCategory().asInput("Treatment")
+      .selectColumn(3).asNumeric().asInput("Decrease")
+      .build();
+
+kie.addObservations(dataFrame);
+
+MeanDifference difference = kie.difference();
+ConfidenceInterval confidenceInterval = difference.confidenceInterval(0.95);
+
+TestingOnValueDifference test = kie.test4GroupDifference();
+
+System.out.println("sample1.mean: " + kie.getSample1Mean());
+System.out.println("sample1.sd: " + kie.getSample1Sd());
+System.out.println("sample1.size: " + kie.getSample1Size());
+
+System.out.println("sample2.mean: " + kie.getSample2Mean());
+System.out.println("sample2.sd: " + kie.getSample2Sd());
+System.out.println("sample2.size: " + kie.getSample2Size());
+
+System.out.println("sampling distribution: " + kie.getSamplingDistribution());
+
+System.out.println("95% confidence interval: " + confidenceInterval);
+
+System.out.println("========================================================");
+
+System.out.println(confidenceInterval.getSummary());
+System.out.println(test.getSummary());
+```

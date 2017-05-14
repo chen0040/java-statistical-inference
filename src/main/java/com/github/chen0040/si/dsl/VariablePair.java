@@ -17,4 +17,12 @@ public class VariablePair {
    public PairedSampleKie numericalSample() {
       return new PairedSampleKie(this);
    }
+
+   public Variable variable1(){
+      return variableOne;
+   }
+
+   public Variable variable2() {
+      return variableTwo;
+   }
 }

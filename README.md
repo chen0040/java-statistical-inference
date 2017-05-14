@@ -102,9 +102,9 @@ Proportion proportion = kie.proportion("Liability");
 double confidenceLevel = 0.95;
 ConfidenceInterval confidenceInterval = proportion.confidenceInterval(confidenceLevel);
 
-System.out.println("sample.mean: " + kie.getSampleMean());
-System.out.println("sample.proportion: " + kie.getSampleProportion());
-System.out.println("sample.sd: " + kie.getSampleSd());
+System.out.println("sample.mean: " + kie.getSampleMean("Liability"));
+System.out.println("sample.proportion: " + kie.getSampleProportion("Liability"));
+System.out.println("sample.sd: " + kie.getSampleSd("Liability"));
 System.out.println("sample.size: " + kie.getSampleSize());
 
 System.out.println("sampling distribution: " + kie.getSamplingDistribution());
@@ -134,5 +134,42 @@ The kie also provides user friendly statement for the null hypothesis test:
 
 ```java
 TestingOnValue test = kie.test4ProportionEqualTo(0.5);
+System.out.println(test.getSummary());
+```
+
+### Paired Sample of a Single Variable
+
+The sample code below shows how to run statistical inference on the sample of a paired observations (e.g. before, after) of a variable:
+
+```java
+Variable variable1 = new Variable("Begin");
+Variable variable2 = new Variable("End");
+
+InputStream inputStream = new FileInputStream("calcium-paired.dat");
+DataFrame dataFrame = DataQuery.csv().from(inputStream)
+      .selectColumn(1).asNumeric().asInput("Begin")
+      .selectColumn(2).asNumeric().asInput("End")
+      .build();
+
+PairedSampleKie kie = variable2.pair(variable1).numericalSample();
+kie.addObservations(dataFrame);
+
+Mean mean = kie.difference();
+
+
+ConfidenceInterval confidenceInterval = mean.confidenceInterval(0.95);
+TestingOnValue test = kie.testDifferenceEqualTo(0.5);
+
+System.out.println("sample.difference-mean: " + kie.getSampleDifferenceMean());
+System.out.println("sample.difference-sd: " + kie.getSampleDifferenceSd());
+System.out.println("sample.size: " + kie.getSampleSize());
+
+System.out.println("sampling distribution (difference): " + kie.getSamplingDistribution());
+
+System.out.println("95% confidence interval: " + confidenceInterval);
+
+System.out.println("========================================================");
+
+System.out.println(confidenceInterval.getSummary());
 System.out.println(test.getSummary());
 ```

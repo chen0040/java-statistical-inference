@@ -79,7 +79,7 @@ Variable variable = new Variable("Type");
 NumericalSampleKie kie = variable.categoricalSample();
 ```
 
-The code below shows how to load observed data about the variable "Amount" into the kie:
+The code below shows how to load observed data about the variable "Type" into the kie:
 
 ```java
 kie.addObservations(new String[] { "Asset", "Liability", "Equity", "Revenue", "Expense", "Liability", "Equity", "Revenue", "Asset", "Liability", "Equity" });
@@ -174,15 +174,15 @@ System.out.println(confidenceInterval.getSummary());
 System.out.println(test.getSummary());
 ```
 
-### Samples from Two Different Population on a Single Numerical Variable
+### Two Different Groups on a Single Numerical Variable
 
-The sample below shows the statistical inference from samples from two different population (e.g., from two different experiment setup) on a numerical variable:
+The sample below shows the statistical inference from samples from two different groups (e.g., from two different experiment setup) on a numerical variable:
 
 ```java
 Variable variable = new Variable("Decrease");
 TwoGroupNumericalSampleKie kie = variable.twoGroupNumericalSample(new Variable("Treatment"), "Calcium", "Placebo");
 
-InputStream inputStream = FileUtils.getResource("calcium.dat");
+InputStream inputStream = new FileInputStream("calcium.dat");
 DataFrame dataFrame = DataQuery.csv().from(inputStream)
       .skipRows(33)
       .selectColumn(0).asCategory().asInput("Treatment")
@@ -213,3 +213,5 @@ System.out.println("========================================================");
 System.out.println(confidenceInterval.getSummary());
 System.out.println(test.getSummary());
 ```
+
+In the above codes, the "calcium.dat" contains results of a randomized comparative experiment to investigate the effect of calcium on blood pressure in African-American men. A treatment group of 10 men received a calcium supplement for 12 weeks, and a control group of 11 men received a placebo during the same period. All subjects had their blood pressure tested before and after the 12-week period.

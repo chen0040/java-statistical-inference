@@ -36,10 +36,6 @@ public class ChiSquareTest {
 
    private double significanceLevel;
 
-   public ChiSquareTest(Sample sample) {
-
-   }
-
    public ChiSquareTest(){
 
    }

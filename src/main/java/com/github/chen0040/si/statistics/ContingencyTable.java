@@ -13,6 +13,22 @@ public class ContingencyTable {
    private Set<String> colNames = new HashSet<>();
    private Map<String, Double> cells = new HashMap<>();
 
+   public ContingencyTable(){
+
+   }
+
+
+   public ContingencyTable(Sample sample) {
+      int count = sample.countByGroupId(null);
+      for(int i=0; i < count; ++i){
+         Observation observation = sample.get(i);
+         String value1 = observation.getCategoricalValue();
+         String value2 = observation.getGroupId();
+         put(value1, value2, get(value1, value2)+1.0);
+      }
+   }
+
+
    public void put(String rowName, String colName, double value) {
       rowNames.add(rowName);
       colNames.add(colName);
@@ -20,7 +36,7 @@ public class ContingencyTable {
    }
 
    public double get(String rowName, String colName) {
-      return cells.get(key(rowName, colName));
+      return cells.getOrDefault(key(rowName, colName), 0.0);
    }
 
    private String key(String rowName, String colName) {

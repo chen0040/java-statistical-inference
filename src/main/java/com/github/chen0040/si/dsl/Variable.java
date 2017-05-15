@@ -48,7 +48,7 @@ public class Variable {
       return new CategoricalToNumericalSampleKie(this, groupVariable);
    }
 
-   public CategoricalToCategoricalSampleKie moreThanTwoGroupCategoricalSample(Variable groupVariable){
+   public CategoricalToCategoricalSampleKie multipleGroupCategoricalSample(Variable groupVariable){
       categorical = false;
       return new CategoricalToCategoricalSampleKie(this, groupVariable);
    }

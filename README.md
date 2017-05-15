@@ -3,6 +3,25 @@ This package is a java implementation of an opinionated statistical inference en
 
 [![Build Status](https://travis-ci.org/chen0040/java-statistical-inference.svg?branch=master)](https://travis-ci.org/chen0040/java-statistical-inference) [![Coverage Status](https://coveralls.io/repos/github/chen0040/java-statistical-inference/badge.svg?branch=master)](https://coveralls.io/github/chen0040/java-statistical-inference?branch=master) 
 
+# Features
+
+* Confidence Interval for numerical variable and proportions (one group or two groups)
+* Hypothesis Testing for Single Numerical Variable
+* Hypothesis Testing for Single Categorical Variable (Proportion)
+* Hypothesis Testing for Two Group Numerical Variable
+* Hypothesis Testing for Two Group Categorical Variable (Proportion)
+* ANOVA: Independence Test between a Numerical Variable and a Categorical Variable
+* Chi-Square Test: Independence Test between a Categorical Variable and another Categorical Variable
+* ANOVA for Regression: Independence Test between a Numerical Variable and another Numerical Variable
+* Automatic change of sampling distribution based on sample size:
+
+    * Normal distribution for large sample on categorical variable (one or two groups)
+    * Bootstrap simulation for small sample on categorical variable (one or two groups)
+    * Normal distribution for large sample on numerical variable (one or two groups)
+    * Student-T distribution for small sample on numerical variable (one or two groups)
+
+* Central Limit Theorem Conditions Check
+
 # Usage
 
 ### Single Numerical Variable 

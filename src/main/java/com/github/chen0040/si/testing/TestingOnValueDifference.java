@@ -54,6 +54,8 @@ public class TestingOnValueDifference {
 
    private DistributionFamily distributionFamily;
 
+   private double significanceLevel = 0.001;
+
    public TestingOnValueDifference(){
 
    }
@@ -119,6 +121,11 @@ public class TestingOnValueDifference {
       sb.append("\np-value (one-tail): ").append(pValueOneTail);
       sb.append("\np-value (two-tail): ").append(pValueTwoTails);
 
+      if(significanceLevel > 0) {
+         sb.append("\nSuppose significance level is ").append(significanceLevel).append(", it is possible that:");
+         sb.append("\n\t1) There is ").append(pValueOneTail < significanceLevel ? "not " : "").append("difference between group1 and group2").append(" under one-tail test");
+         sb.append("\n\t2) There is ").append(pValueTwoTails < significanceLevel ? "not " : "").append("difference between group1 and group2").append(" under two-tails test");
+      }
 
       return sb.toString();
    }

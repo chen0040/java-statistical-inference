@@ -174,9 +174,11 @@ System.out.println(confidenceInterval.getSummary());
 System.out.println(test.getSummary());
 ```
 
-### Two Different Groups on a Single Numerical Variable
+In the above codes, the "[calcium-paired.dat](https://github.com/chen0040/java-statistical-inference/blob/master/src/test/resources/calcium-paired.dat)" contains results of a randomized comparative experiment to investigate the effect of calcium on blood pressure in African-American men. A treatment group of 10 men received a calcium supplement for 12 weeks. All subjects had their blood pressure tested before and after the 12-week period.
 
-The sample below shows the statistical inference from samples from two different groups (e.g., from two different experiment setup) on a numerical variable:
+### Two Different Groups on a Numerical Variable
+
+The sample below shows the statistical inference from samples of two different groups (e.g., from two different experiment setup) on a numerical variable:
 
 ```java
 Variable variable = new Variable("Decrease");
@@ -196,13 +198,13 @@ ConfidenceInterval confidenceInterval = difference.confidenceInterval(0.95);
 
 TestingOnValueDifference test = kie.test4GroupDifference();
 
-System.out.println("sample1.mean: " + kie.getSample1Mean());
-System.out.println("sample1.sd: " + kie.getSample1Sd());
-System.out.println("sample1.size: " + kie.getSample1Size());
+System.out.println("sample1.mean: " + kie.getGroup1SampleMean());
+System.out.println("sample1.sd: " + kie.getGroup1SampleSd());
+System.out.println("sample1.size: " + kie.getGroup1SampleSize());
 
-System.out.println("sample2.mean: " + kie.getSample2Mean());
-System.out.println("sample2.sd: " + kie.getSample2Sd());
-System.out.println("sample2.size: " + kie.getSample2Size());
+System.out.println("sample2.mean: " + kie.getGroup2SampleMean());
+System.out.println("sample2.sd: " + kie.getGroup2SampleSd());
+System.out.println("sample2.size: " + kie.getGroup2SampleSize());
 
 System.out.println("sampling distribution: " + kie.getSamplingDistribution());
 
@@ -214,4 +216,51 @@ System.out.println(confidenceInterval.getSummary());
 System.out.println(test.getSummary());
 ```
 
-In the above codes, the "calcium.dat" contains results of a randomized comparative experiment to investigate the effect of calcium on blood pressure in African-American men. A treatment group of 10 men received a calcium supplement for 12 weeks, and a control group of 11 men received a placebo during the same period. All subjects had their blood pressure tested before and after the 12-week period.
+In the above codes, the "[calcium.dat](https://github.com/chen0040/java-statistical-inference/blob/master/src/test/resources/calcium.dat)" contains results of a randomized comparative experiment to investigate the effect of calcium on blood pressure in African-American men. A treatment group of 10 men received a calcium supplement for 12 weeks, and a control group of 11 men received a placebo during the same period. All subjects had their blood pressure tested before and after the 12-week period.
+
+
+### Two Different Groups on a Categorical Variable
+
+The sample below shows the statistical inference from samples of two different groups (e.g., from two different experiment setup) on a categorical variable:
+
+```java
+Variable variable_use = new Variable("UseContraceptive");
+Variable variable_urban = new Variable("IsUrban");
+
+InputStream inputStream = new FileInputStream("contraception.csv");
+DataFrame dataFrame = DataQuery.csv(",")
+      .from(inputStream)
+      .selectColumn(3).asCategory().asInput("UseContraceptive")
+      .selectColumn(6).asCategory().asInput("IsUrban")
+      .build();
+
+TwoGroupCategoricalSampleKie kie = variable_use.twoGroupCategoricalSampleKie(variable_urban, "Y", "N");
+
+kie.addObservations(dataFrame);
+
+ProportionDifference difference = kie.proportionDifference("Y");
+ConfidenceInterval confidenceInterval = difference.confidenceInterval(0.95);
+
+TestingOnProportionDifference test = kie.test4EqualProportions("Y");
+
+System.out.println("sample1.mean: " + kie.getGroup1SampleMean("Y"));
+System.out.println("sample1.proportion: " + kie.getGroup1SampleProportion("Y"));
+System.out.println("sample1.sd: " + kie.getGroup1SampleSd("Y"));
+System.out.println("sample1.size: " + kie.getGroup1SampleSize());
+
+System.out.println("sample2.mean: " + kie.getGroup2SampleMean("Y"));
+System.out.println("sample2.proportion: " + kie.getGroup2SampleProportion("Y"));
+System.out.println("sample2.sd: " + kie.getGroup2SampleSd("Y"));
+System.out.println("sample2.size: " + kie.getGroup2SampleSize());
+
+System.out.println("sampling distribution: " + kie.getSamplingDistribution("Y"));
+
+System.out.println("95% confidence interval: " + confidenceInterval);
+
+System.out.println("========================================================");
+
+System.out.println(confidenceInterval.getSummary());
+System.out.println(test.getSummary());
+```
+
+In the above codes, the "[contraception.csv](https://github.com/chen0040/java-statistical-inference/blob/master/src/test/resources/contraception.csv)" contains results of whether a person is from urban area and whether he/she uses contraception.

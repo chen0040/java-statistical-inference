@@ -39,13 +39,13 @@ public class TwoGroupNumericalSampleKieUnitTest {
 
       TestingOnValueDifference test = kie.test4GroupDifference();
 
-      System.out.println("sample1.mean: " + kie.getSample1Mean());
-      System.out.println("sample1.sd: " + kie.getSample1Sd());
-      System.out.println("sample1.size: " + kie.getSample1Size());
+      System.out.println("sample1.mean: " + kie.getGroup1SampleMean());
+      System.out.println("sample1.sd: " + kie.getGroup1SampleSd());
+      System.out.println("sample1.size: " + kie.getGroup1SampleSize());
 
-      System.out.println("sample2.mean: " + kie.getSample2Mean());
-      System.out.println("sample2.sd: " + kie.getSample2Sd());
-      System.out.println("sample2.size: " + kie.getSample2Size());
+      System.out.println("sample2.mean: " + kie.getGroup2SampleMean());
+      System.out.println("sample2.sd: " + kie.getGroup2SampleSd());
+      System.out.println("sample2.size: " + kie.getGroup2SampleSize());
 
       System.out.println("sampling distribution: " + kie.getSamplingDistribution());
 

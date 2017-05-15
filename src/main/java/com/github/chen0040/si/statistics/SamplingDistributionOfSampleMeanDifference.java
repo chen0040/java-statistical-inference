@@ -178,4 +178,11 @@ public class SamplingDistributionOfSampleMeanDifference {
    public DistributionFamily getDistributionFamily(){
       return distributionFamily;
    }
+
+   @Override
+   public String toString(){
+      StringBuilder sb = new StringBuilder();
+      sb.append(groupId1).append("-").append(groupId2).append(" ~ ").append(distributionFamily).append("(mu.estimate=").append(sampleMean1PointEstimate - sampleMean2PointEstimate).append(", SE=").append(standardError).append(")");
+      return sb.toString();
+   }
 }

@@ -32,6 +32,8 @@ public class TestingOnProportionDifference {
    private double pValueOneTail;
    private double pValueTwoTails;
 
+   private double significanceLevel = 0.001;
+
    private DistributionFamily distributionFamily = DistributionFamily.Normal;
 
    public void run(String successLabel, double pHat1, double pHat2, int sampleSize1, int sampleSize2) {
@@ -79,6 +81,11 @@ public class TestingOnProportionDifference {
       sb.append("\np-value (one-tail): ").append(pValueOneTail);
       sb.append("\np-value (two-tail): ").append(pValueTwoTails);
 
+      if(significanceLevel > 0) {
+         sb.append("\nSuppose significance level is ").append(significanceLevel).append(", it is possible that:");
+         sb.append("\n\t1) There is ").append(pValueOneTail < significanceLevel ? "not " : "").append("difference for the proportion variable between group1 and group2").append(" under one-tail test");
+         sb.append("\n\t2) There is ").append(pValueTwoTails < significanceLevel ? "not " : "").append("difference for the proportion variable between group1 and group2").append(" under two-tails test");
+      }
 
       return sb.toString();
    }

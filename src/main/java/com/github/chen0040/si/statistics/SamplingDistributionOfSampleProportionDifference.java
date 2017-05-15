@@ -43,7 +43,7 @@ public class SamplingDistributionOfSampleProportionDifference {
    private final String groupId2;
 
    public SamplingDistributionOfSampleProportionDifference(SampleDistribution sampleDistribution1, SampleDistribution sampleDistribution2) {
-      if(!sampleDistribution1.isNumeric()) {
+      if(sampleDistribution1.isNumeric()) {
          throw new VariableWrongValueTypeException("Sampling distribution for sample proportions is not defined for numeric variable");
       }
 
@@ -157,8 +157,8 @@ public class SamplingDistributionOfSampleProportionDifference {
 
       StringBuilder sb = new StringBuilder();
       sb.append("We are ").append(confidenceLevel * 100).append("% confident that");
-      sb.append(" the proportion of \"").append(groupId1).append("\" is ");
-      sb.append(interval).append(" higher than the proportion of \"").append(groupId2).append("\"");
+      sb.append(" the proportion variable in group labelled as \"").append(groupId1).append("\" is ");
+      sb.append(interval).append(" higher than the proportion in group labelled as \"").append(groupId2).append("\"");
 
       return new ConfidenceInterval(interval, confidenceLevel, sb.toString());
    }
@@ -166,5 +166,12 @@ public class SamplingDistributionOfSampleProportionDifference {
 
    public DistributionFamily getDistributionFamily() {
       return distributionFamily;
+   }
+
+   @Override
+   public String toString(){
+      StringBuilder sb = new StringBuilder();
+      sb.append("Proportion(").append(groupId1).append("-").append(groupId2).append(") ~ ").append(distributionFamily).append("(mu.estimate=").append(sampleProportion1PointEstimate - sampleProportion2PointEstimate).append(", SE=").append(standardError).append(")");
+      return sb.toString();
    }
 }

@@ -86,14 +86,14 @@ public class TwoGroupNumericalSampleKie {
       return this;
    }
 
-   private SampleDistribution getSample1Distribution(){
+   private SampleDistribution getGroup1SampleDistribution(){
       if(sample1Distribution == null) {
          sample1Distribution = new SampleDistribution(sample, group1Id);
       }
       return sample1Distribution;
    }
 
-   private SampleDistribution getSample2Distribution(){
+   private SampleDistribution getGroup2SampleDistribution(){
       if(sample2Distribution == null) {
          sample2Distribution = new SampleDistribution(sample, group2Id);
       }
@@ -102,8 +102,8 @@ public class TwoGroupNumericalSampleKie {
 
    public SamplingDistributionOfSampleMeanDifference getSamplingDistribution(){
       if(samplingDistributionOfSampleMeanDifference == null) {
-         samplingDistributionOfSampleMeanDifference = new SamplingDistributionOfSampleMeanDifference(getSample1Distribution(),
-                 getSample2Distribution());
+         samplingDistributionOfSampleMeanDifference = new SamplingDistributionOfSampleMeanDifference(getGroup1SampleDistribution(),
+                 getGroup2SampleDistribution());
       }
       return samplingDistributionOfSampleMeanDifference;
    }
@@ -123,8 +123,8 @@ public class TwoGroupNumericalSampleKie {
    public TestingOnValueDifference test4GroupDifference() {
       if(sample != null) {
          TestingOnValueDifference test = new TestingOnValueDifference();
-         SampleDistribution distribution1 = getSample1Distribution();
-         SampleDistribution distribution2 = getSample2Distribution();
+         SampleDistribution distribution1 = getGroup1SampleDistribution();
+         SampleDistribution distribution2 = getGroup2SampleDistribution();
          double xHat1 = distribution1.getSampleMean();
          double sd1 = distribution1.getSampleSd();
          int n1 = distribution1.getSampleSize();
@@ -152,27 +152,27 @@ public class TwoGroupNumericalSampleKie {
       }
    }
    
-   public double getSample1Mean(){
-      return getSample1Distribution().getSampleMean();
+   public double getGroup1SampleMean(){
+      return getGroup1SampleDistribution().getSampleMean();
    }
    
-   public double getSample1Sd(){
-      return getSample1Distribution().getSampleSd();
+   public double getGroup1SampleSd(){
+      return getGroup1SampleDistribution().getSampleSd();
    }
    
-   public double getSample1Size(){
-      return getSample1Distribution().getSampleSize();
+   public double getGroup1SampleSize(){
+      return getGroup1SampleDistribution().getSampleSize();
    }
 
-   public double getSample2Mean(){
-      return getSample2Distribution().getSampleMean();
+   public double getGroup2SampleMean(){
+      return getGroup2SampleDistribution().getSampleMean();
    }
 
-   public double getSample2Sd(){
-      return getSample2Distribution().getSampleSd();
+   public double getGroup2SampleSd(){
+      return getGroup2SampleDistribution().getSampleSd();
    }
 
-   public double getSample2Size(){
-      return getSample2Distribution().getSampleSize();
+   public double getGroup2SampleSize(){
+      return getGroup2SampleDistribution().getSampleSize();
    }
 }

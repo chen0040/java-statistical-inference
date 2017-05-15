@@ -3,6 +3,7 @@ package com.github.chen0040.si.dsl;
 
 import com.github.chen0040.data.frame.DataFrame;
 import com.github.chen0040.data.frame.DataQuery;
+import com.github.chen0040.si.statistics.ContingencyTable;
 import com.github.chen0040.si.testing.ChiSquareTest;
 import com.github.chen0040.si.utils.FileUtils;
 import org.testng.annotations.Test;
@@ -35,6 +36,10 @@ public class CategoricalToCategoricalSampleKieUnitTest {
       kie.addObservations(dataFrame);
 
       ChiSquareTest test = kie.test4Independence();
+
+      ContingencyTable contingencyTable = kie.getOrCreateContingencyTable();
+
+      System.out.println(contingencyTable.getSummary());
 
       System.out.println(test.getSummary());
 

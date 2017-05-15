@@ -74,4 +74,16 @@ public class ContingencyTable {
       }
       return sum;
    }
+
+
+   public String getSummary() {
+      StringBuilder sb = new StringBuilder();
+      for(String rowName : rowNames){
+         for(String colName: colNames){
+            double value = get(rowName, colName);
+            sb.append("Freq[").append(rowName).append("][").append(colName).append("]: ").append(value).append("\n");
+         }
+      }
+      return sb.toString();
+   }
 }

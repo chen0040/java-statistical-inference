@@ -218,6 +218,8 @@ System.out.println(test.getSummary());
 
 In the above codes, the "[calcium.dat](https://github.com/chen0040/java-statistical-inference/blob/master/src/test/resources/calcium.dat)" contains results of a randomized comparative experiment to investigate the effect of calcium on blood pressure in African-American men. A treatment group of 10 men received a calcium supplement for 12 weeks, and a control group of 11 men received a placebo during the same period. All subjects had their blood pressure tested before and after the 12-week period.
 
+The "kie.test4GroupDifference()" can be used to test whether the numerical variable is independent of another categorical variable which has two levels (i.e. the "group" variable)
+
 
 ### Two Different Groups on a Categorical Variable
 
@@ -241,7 +243,7 @@ kie.addObservations(dataFrame);
 ProportionDifference difference = kie.proportionDifference("Y");
 ConfidenceInterval confidenceInterval = difference.confidenceInterval(0.95);
 
-TestingOnProportionDifference test = kie.test4EqualProportions("Y");
+TestingOnProportionDifference test = kie.test4GroupDifference("Y");
 
 System.out.println("sample1.mean: " + kie.getGroup1SampleMean("Y"));
 System.out.println("sample1.proportion: " + kie.getGroup1SampleProportion("Y"));
@@ -264,3 +266,36 @@ System.out.println(test.getSummary());
 ```
 
 In the above codes, the "[contraception.csv](https://github.com/chen0040/java-statistical-inference/blob/master/src/test/resources/contraception.csv)" contains results of whether a person is from urban area and whether he/she uses contraception.
+
+The "kie.test4GroupDifference('Y')" can be used to test whether the categorical variable is independent of another categorical variable which has two levels (i.e. the "group" variable)
+
+### Test Independence between two Categorical Variables
+
+The sample code belows show to test for the independence between two categorical variables
+
+```java
+Variable variable1 = new Variable("UseContraceptive");
+Variable variable2 = new Variable("LiveChannel");
+
+CategoricalToCategoricalSampleKie kie = variable1.multipleGroupCategoricalSample(variable2);
+
+InputStream inputStream = new FileInputStream("contraception.csv");
+DataFrame dataFrame = DataQuery.csv(",")
+      .from(inputStream)
+      .skipRows(1)
+      .selectColumn(3).transform(text -> text.equals("Y") ? "Use" : "DontUse").asInput("UseContraceptive")
+      .selectColumn(4).asCategory().asInput("LiveChannel")
+      .build();
+
+kie.addObservations(dataFrame);
+
+ChiSquareTest test = kie.test4Independence();
+
+ContingencyTable contingencyTable = kie.getOrCreateContingencyTable();
+
+System.out.println(contingencyTable.getSummary());
+
+System.out.println(test.getSummary());
+```
+
+In the above codes, the "[contraception.csv](https://github.com/chen0040/java-statistical-inference/blob/master/src/test/resources/contraception.csv)" contains results of whether a person watch which live channel (categorical variable) and whether he/she uses contraception (another categorical variable).

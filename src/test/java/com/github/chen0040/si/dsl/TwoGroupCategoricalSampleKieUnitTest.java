@@ -36,7 +36,7 @@ public class TwoGroupCategoricalSampleKieUnitTest {
       ProportionDifference difference = kie.proportionDifference("Y");
       ConfidenceInterval confidenceInterval = difference.confidenceInterval(0.95);
 
-      TestingOnProportionDifference test = kie.test4EqualProportions("Y");
+      TestingOnProportionDifference test = kie.test4GroupDifference("Y");
 
       System.out.println("sample1.mean: " + kie.getGroup1SampleMean("Y"));
       System.out.println("sample1.proportion: " + kie.getGroup1SampleProportion("Y"));

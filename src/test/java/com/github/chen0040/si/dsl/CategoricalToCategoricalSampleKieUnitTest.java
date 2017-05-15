@@ -29,7 +29,8 @@ public class CategoricalToCategoricalSampleKieUnitTest {
       InputStream inputStream = FileUtils.getResource("contraception.csv");
       DataFrame dataFrame = DataQuery.csv(",")
               .from(inputStream)
-              .selectColumn(3).asCategory().asInput("UseContraceptive")
+              .skipRows(1)
+              .selectColumn(3).transform(text -> text.equals("Y") ? "Use" : "DontUse").asInput("UseContraceptive")
               .selectColumn(4).asCategory().asInput("LiveChannel")
               .build();
 

@@ -21,7 +21,7 @@ public class CategoricalToCategoricalSampleKie {
 
    public CategoricalToCategoricalSampleKie(Variable variable, Variable groupVariable){
       this.variable = variable;
-      this.groupVariable = variable;
+      this.groupVariable = groupVariable;
    }
 
    public CategoricalToCategoricalSampleKie addObservation(String value, String groupId){

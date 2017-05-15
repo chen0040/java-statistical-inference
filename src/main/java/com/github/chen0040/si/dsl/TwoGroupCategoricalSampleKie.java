@@ -124,7 +124,7 @@ public class TwoGroupCategoricalSampleKie {
       }
    }
 
-   public TestingOnProportionDifference test4EqualProportions(String value) {
+   public TestingOnProportionDifference test4GroupDifference(String value) {
       if(successLabel != null && !successLabel.equals(value)){
          throw new RuntimeException("distribution is already provided with the success label that is different that the parameter");
       }

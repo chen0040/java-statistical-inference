@@ -81,8 +81,14 @@ public class ContingencyTable {
       for(String rowName : rowNames){
          for(String colName: colNames){
             double value = get(rowName, colName);
-            sb.append("Freq[").append(rowName).append("][").append(colName).append("]: ").append(value).append("\n");
+            sb.append("Cell.Count[").append(rowName).append("][").append(colName).append("]: ").append(value).append("\n");
          }
+      }
+      for(String rowName : rowNames){
+         sb.append("Row.Count[").append(rowName).append("]: ").append(rowTotal(rowName)).append("\n");
+      }
+      for(String colName : colNames){
+         sb.append("Col.Count[").append(colName).append("]: ").append(columnTotal(colName)).append("\n");
       }
       return sb.toString();
    }

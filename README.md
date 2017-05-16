@@ -30,7 +30,7 @@ Add the following dependency into your POM file:
 <dependency>
   <groupId>com.github.chen0040</groupId>
   <artifactId>java-statistical-inference</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.3</version>
 </dependency>
 ```
 

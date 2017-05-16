@@ -94,15 +94,7 @@ public class Anova {
       }
 
       SampleDistribution sampleDistributionTotal = new SampleDistribution(sample, null);
-      List<String> groups = sample.groups();
-
-      Map<String, SampleDistribution> sampleDistributionByGroupId = new HashMap<>();
-      for(int i=0; i < groups.size(); ++i){
-         String groupId = groups.get(i);
-
-         SampleDistribution sampleDistributionGroup = new SampleDistribution(sample, groupId);
-         sampleDistributionByGroupId.put(groupId, sampleDistributionGroup);
-      }
+      Map<String, SampleDistribution> sampleDistributionByGroupId = sample.sampleDistributionsByGroupId();
 
       run(sampleDistributionTotal, sampleDistributionByGroupId, 0.001);
    }

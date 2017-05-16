@@ -86,4 +86,16 @@ public class Sample {
    }
 
 
+   public Map<String, SampleDistribution> sampleDistributionsByGroupId() {
+      List<String> groups = groups();
+
+      Map<String, SampleDistribution> sampleDistributionByGroupId = new HashMap<>();
+      for(int i=0; i < groups.size(); ++i){
+         String groupId = groups.get(i);
+
+         SampleDistribution sampleDistributionGroup = new SampleDistribution(this, groupId);
+         sampleDistributionByGroupId.put(groupId, sampleDistributionGroup);
+      }
+      return sampleDistributionByGroupId;
+   }
 }

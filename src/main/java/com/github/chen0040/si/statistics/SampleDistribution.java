@@ -5,7 +5,7 @@ import com.github.chen0040.si.exceptions.VariableWrongValueTypeException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import com.github.chen0040.data.exceptions.NotImplementedException;
 
 
 /**

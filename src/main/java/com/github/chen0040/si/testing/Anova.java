@@ -8,7 +8,7 @@ import lombok.Setter;
 import org.apache.commons.math3.distribution.FDistribution;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import com.github.chen0040.data.exceptions.NotImplementedException;
 
 import java.util.HashMap;
 import java.util.List;

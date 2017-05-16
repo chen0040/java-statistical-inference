@@ -80,7 +80,6 @@ public class Sample {
 
    /**
     * return true if the sample contain two numeric variable x and y
-    * @return
     */
    public boolean containsTwoNumericalVariables(){
       return observations.get(0).containsTwoNumericalVariables();

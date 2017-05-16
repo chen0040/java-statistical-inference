@@ -8,7 +8,7 @@ import com.github.chen0040.si.utils.Count;
 import com.github.chen0040.si.utils.Interval;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.exception.OutOfRangeException;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import com.github.chen0040.data.exceptions.NotImplementedException;
 
 import java.util.List;
 

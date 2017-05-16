@@ -22,6 +22,18 @@ This package is a java implementation of an opinionated statistical inference en
 
 * Central Limit Theorem Conditions Check
 
+# Install
+
+Add the following dependency into your POM file:
+
+```xml
+<dependency>
+  <groupId>com.github.chen0040</groupId>
+  <artifactId>java-statistical-inference</artifactId>
+  <version>1.0.1</version>
+</dependency>
+```
+
 # Usage
 
 ### Single Numerical Variable 

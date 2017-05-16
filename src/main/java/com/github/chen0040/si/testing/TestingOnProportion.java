@@ -61,6 +61,7 @@ public class TestingOnProportion {
 
    /**
     * The method return the p-value for both one-tail and two-tails testing of proportion of success for a categorical variable
+    * @param successLabel the label for the "success" of proportion
     * @param pHat the point estimate $p_{hat}$ of sample proportion $p_{bar}$
     * @param sampleSize the sample size of sample drawn from the population
     * @param pNull the null value $p_0$ for true $p$ of the population under $H_0$

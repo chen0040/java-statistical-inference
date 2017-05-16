@@ -6,13 +6,13 @@
 
     <groupId>com.github.chen0040</groupId>
     <artifactId>java-statistical-inference</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.3</version>
 
 
     <licenses>
         <license>
             <name>MIT</name>
-            <url>https://github.com/chen0040/java-statistical-inference/LICENSE.md</url>
+            <url>https://github.com/chen0040/java-statistical-inference/LICENSE</url>
             <comments>MIT License</comments>
         </license>
     </licenses>

@@ -175,4 +175,25 @@ public class TwoGroupNumericalSampleKie {
    public double getGroup2SampleSize(){
       return getGroup2SampleDistribution().getSampleSize();
    }
+
+
+   public double getGroup1SampleMin() { return getGroup1SampleDistribution().getMin(); }
+
+   public double getGroup1SampleMax() { return getGroup1SampleDistribution().getMax(); }
+
+   public double getGroup1SampleMedian() { return getGroup1SampleDistribution().getMedian(); }
+
+   public double getGroup1SampleFirstQuartile() { return getGroup1SampleDistribution().getFirstQuartile(); }
+
+   public double getGroup1SampleThirdQuartile() { return getGroup1SampleDistribution().getThirdQuartile(); }
+
+   public double getGroup2SampleMin() { return getGroup2SampleDistribution().getMin(); }
+
+   public double getGroup2SampleMax() { return getGroup2SampleDistribution().getMax(); }
+
+   public double getGroup2SampleMedian() { return getGroup2SampleDistribution().getMedian(); }
+
+   public double getGroup2SampleFirstQuartile() { return getGroup2SampleDistribution().getFirstQuartile(); }
+
+   public double getGroup2SampleThirdQuartile() { return getGroup2SampleDistribution().getThirdQuartile(); }
 }

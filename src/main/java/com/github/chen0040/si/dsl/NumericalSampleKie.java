@@ -114,6 +114,15 @@ public class NumericalSampleKie {
       return getSampleDistribution().getSampleSize();
    }
 
+   public double getSampleMin() { return getSampleDistribution().getMin(); }
+
+   public double getSampleMax() { return getSampleDistribution().getMax(); }
+
+   public double getSampleMedian() { return getSampleDistribution().getMedian(); }
+
+   public double getSampleFirstQuartile() { return getSampleDistribution().getFirstQuartile(); }
+
+   public double getSampleThirdQuartile() { return getSampleDistribution().getThirdQuartile(); }
 
    public void addObservations(double[] values) {
       for(Double value : values){

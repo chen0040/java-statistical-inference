@@ -70,6 +70,11 @@ ConfidenceInterval confidenceInterval = mean.confidenceInterval(confidenceLevel)
 System.out.println("sample.mean: " + kie.getSampleMean());
 System.out.println("sample.sd: " + kie.getSampleSd());
 System.out.println("sample.size: " + kie.getSampleSize());
+System.out.println("sample.median: " + kie.getSampleMedian());
+System.out.println("sample.max: " + kie.getSampleMax());
+System.out.println("sample.min: " + kie.getSampleMin());
+System.out.println("sample.1st.quartile: " + kie.getSampleFirstQuartile());
+System.out.println("sample.3rd.quartile: " + kie.getSampleThirdQuartile());
 
 System.out.println("sampling distribution: " + kie.getSamplingDistribution());
 
@@ -194,6 +199,11 @@ TestingOnValue test = kie.testDifferenceEqualTo(0.5);
 System.out.println("sample.difference-mean: " + kie.getSampleDifferenceMean());
 System.out.println("sample.difference-sd: " + kie.getSampleDifferenceSd());
 System.out.println("sample.size: " + kie.getSampleSize());
+System.out.println("sample.median: " + kie.getSampleMedian());
+System.out.println("sample.max: " + kie.getSampleMax());
+System.out.println("sample.min: " + kie.getSampleMin());
+System.out.println("sample.1st.quartile: " + kie.getSampleFirstQuartile());
+System.out.println("sample.3rd.quartile: " + kie.getSampleThirdQuartile());
 
 System.out.println("sampling distribution (difference): " + kie.getSamplingDistribution());
 
@@ -232,10 +242,20 @@ TestingOnValueDifference test = kie.test4GroupDifference();
 System.out.println("sample1.mean: " + kie.getGroup1SampleMean());
 System.out.println("sample1.sd: " + kie.getGroup1SampleSd());
 System.out.println("sample1.size: " + kie.getGroup1SampleSize());
+System.out.println("sample1.median: " + kie.getGroup1SampleMedian());
+System.out.println("sample1.max: " + kie.getGroup1SampleMax());
+System.out.println("sample1.min: " + kie.getGroup1SampleMin());
+System.out.println("sample1.1st.quartile: " + kie.getGroup1SampleFirstQuartile());
+System.out.println("sample1.3rd.quartile: " + kie.getGroup1SampleThirdQuartile());
 
 System.out.println("sample2.mean: " + kie.getGroup2SampleMean());
 System.out.println("sample2.sd: " + kie.getGroup2SampleSd());
 System.out.println("sample2.size: " + kie.getGroup2SampleSize());
+System.out.println("sample2.median: " + kie.getGroup2SampleMedian());
+System.out.println("sample2.max: " + kie.getGroup2SampleMax());
+System.out.println("sample2.min: " + kie.getGroup2SampleMin());
+System.out.println("sample2.2st.quartile: " + kie.getGroup2SampleFirstQuartile());
+System.out.println("sample2.3rd.quartile: " + kie.getGroup2SampleThirdQuartile());
 
 System.out.println("sampling distribution: " + kie.getSamplingDistribution());
 

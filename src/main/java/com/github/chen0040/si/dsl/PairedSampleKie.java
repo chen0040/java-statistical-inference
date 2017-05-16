@@ -89,4 +89,15 @@ public class PairedSampleKie {
    }
 
 
+   public double getSampleMin() { return getSampleDistribution().getMin(); }
+
+   public double getSampleMax() { return getSampleDistribution().getMax(); }
+
+   public double getSampleMedian() { return getSampleDistribution().getMedian(); }
+
+   public double getSampleFirstQuartile() { return getSampleDistribution().getFirstQuartile(); }
+
+   public double getSampleThirdQuartile() { return getSampleDistribution().getThirdQuartile(); }
+
+
 }

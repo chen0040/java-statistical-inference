@@ -41,6 +41,11 @@ public class PairedSampleKieUnitTest {
       System.out.println("sample.mean: " + kie.getSampleDifferenceMean());
       System.out.println("sample.sd: " + kie.getSampleDifferenceSd());
       System.out.println("sample.size: " + kie.getSampleSize());
+      System.out.println("sample.median: " + kie.getSampleMedian());
+      System.out.println("sample.max: " + kie.getSampleMax());
+      System.out.println("sample.min: " + kie.getSampleMin());
+      System.out.println("sample.1st.quartile: " + kie.getSampleFirstQuartile());
+      System.out.println("sample.3rd.quartile: " + kie.getSampleThirdQuartile());
 
       System.out.println("sampling distribution: " + kie.getSamplingDistribution());
 

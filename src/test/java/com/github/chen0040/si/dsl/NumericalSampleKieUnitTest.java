@@ -38,6 +38,11 @@ public class NumericalSampleKieUnitTest {
       System.out.println("sample.mean: " + kie.getSampleMean());
       System.out.println("sample.sd: " + kie.getSampleSd());
       System.out.println("sample.size: " + kie.getSampleSize());
+      System.out.println("sample.median: " + kie.getSampleMedian());
+      System.out.println("sample.max: " + kie.getSampleMax());
+      System.out.println("sample.min: " + kie.getSampleMin());
+      System.out.println("sample.1st.quartile: " + kie.getSampleFirstQuartile());
+      System.out.println("sample.3rd.quartile: " + kie.getSampleThirdQuartile());
 
       System.out.println("sampling distribution: " + kie.getSamplingDistribution());
 

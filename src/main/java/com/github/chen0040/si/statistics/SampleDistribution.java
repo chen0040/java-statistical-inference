@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 import com.github.chen0040.data.exceptions.NotImplementedException;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 /**
  * Created by xschen on 3/5/2017.
@@ -37,6 +40,16 @@ public class SampleDistribution {
    @Setter(AccessLevel.NONE)
    private double sumOfSquares;
 
+   private double firstQuartile;
+
+   private double thirdQuartile;
+
+   private double min;
+
+   private double max;
+
+   private double median;
+
    public SampleDistribution(Sample sample, String groupId){
       if(!sample.isNumeric()){
          throw new VariableWrongValueTypeException("The constructor can only work on numeric variables");
@@ -46,21 +59,42 @@ public class SampleDistribution {
 
       isNumeric = true;
 
-      sampleMean = sample.getObservations().stream()
+      List<Double> values = sample.getObservations().stream()
               .filter(o -> groupId == null || groupId.equals(o.getGroupId()))
               .map(Observation::getX)
+              .collect(Collectors.toList());
+
+      values.sort(Double::compare);
+
+      sampleMean = values.stream()
               .reduce((a, b) -> a + b).get() / sample.countByGroupId(groupId);
 
-      sumOfSquares = sample.getObservations().stream()
-              .filter(o -> groupId == null || groupId.equals(o.getGroupId()))
-              .map(o -> Math.pow(o.getX() - sampleMean, 2.0))
+      sumOfSquares = values.stream()
+              .map(o -> Math.pow(o - sampleMean, 2.0))
               .reduce((a, b) -> a + b).get();
 
-      sampleVariance = sumOfSquares / (sample.countByGroupId(groupId)-1);
+      min = values.get(0);
+
+      max = values.get(values.size()-1);
+
+      if(values.size() % 2 == 0) {
+         median = values.get(values.size() / 2);
+      } else {
+         median = (values.get((values.size()-1) / 2) + values.get((values.size()+1) / 2)) / 2;
+      }
+
+      firstQuartile = values.get((int)(values.size() * 0.25));
+
+      thirdQuartile = values.get((int)(values.size() * 0.75));
+
+
+      sampleSize = values.size();
+
+      sampleVariance = sumOfSquares / (sampleSize - 1);
 
       sampleSd = Math.sqrt(sampleVariance);
 
-      sampleSize = sample.countByGroupId(groupId);
+
    }
 
    public SampleDistribution(Sample sample, String successLabel, String groupId) {

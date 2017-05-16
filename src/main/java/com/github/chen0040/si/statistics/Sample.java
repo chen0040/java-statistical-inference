@@ -76,11 +76,7 @@ public class Sample {
    public SampleMetaData metaData(){
       return metaData;
    }
-
-
-   /**
-    * return true if the sample contain two numeric variable x and y
-    */
+   
    public boolean containsTwoNumericalVariables(){
       return observations.get(0).containsTwoNumericalVariables();
    }

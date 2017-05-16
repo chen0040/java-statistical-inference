@@ -19,7 +19,7 @@ public class ContingencyTable {
 
 
    public ContingencyTable(Sample sample) {
-      int count = sample.countByGroupId(null);
+      int count = sample.size();
       for(int i=0; i < count; ++i){
          Observation observation = sample.get(i);
          String value1 = observation.getCategoricalValue();

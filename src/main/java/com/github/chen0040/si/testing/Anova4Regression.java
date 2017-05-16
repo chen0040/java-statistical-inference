@@ -62,7 +62,7 @@ public class Anova4Regression {
 
       ySSG = ySST - ySSE;
 
-      dfT = sample.countByGroupId(null) - 1;
+      dfT = sample.size() - 1;
       dfG = 1;
       dfE = dfT - dfG;
 

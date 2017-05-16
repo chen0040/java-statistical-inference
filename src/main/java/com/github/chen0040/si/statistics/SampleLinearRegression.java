@@ -41,7 +41,7 @@ public class SampleLinearRegression {
    public SampleLinearRegression(Sample sample){
 
 
-      int sampleSize = sample.countByGroupId(null);
+      int sampleSize = sample.size();
 
       if(!sample.containsTwoNumericalVariables()) {
          throw new VariableWrongValueTypeException("Sample 1 should contain numeric variable x and y");

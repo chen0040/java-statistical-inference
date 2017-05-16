@@ -49,6 +49,10 @@ public class Sample {
       return (int)observations.stream().filter(o -> groupId == null || groupId.equals(o.getGroupId())).count();
    }
 
+   public int size(){
+      return countByGroupId(null);
+   }
+
    public Observation get(int index) {
       return observations.get(index);
    }
@@ -76,7 +80,7 @@ public class Sample {
    public SampleMetaData metaData(){
       return metaData;
    }
-   
+
    public boolean containsTwoNumericalVariables(){
       return observations.get(0).containsTwoNumericalVariables();
    }

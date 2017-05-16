@@ -13,6 +13,6 @@ public class XYSampleKieUnitTest {
 
    @Test
    public void test_two_numerical_variables_load_file(){
-      
+
    }
 }

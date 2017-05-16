@@ -156,9 +156,9 @@ TestingOnValue test = kie.test4ProportionEqualTo(0.5);
 System.out.println(test.getSummary());
 ```
 
-### Paired Sample of a Single Variable
+### Paired Sample for a Numerical Variable
 
-The sample code below shows how to run statistical inference on the sample of a paired observations (e.g. before, after) of a variable:
+The sample code below shows how to run statistical inference on the sample from a paired observations (e.g. before, after) for a numerical variable:
 
 ```java
 Variable variable1 = new Variable("Begin");
@@ -195,9 +195,9 @@ System.out.println(test.getSummary());
 
 In the above codes, the "[calcium-paired.dat](https://github.com/chen0040/java-statistical-inference/blob/master/src/test/resources/calcium-paired.dat)" contains results of a randomized comparative experiment to investigate the effect of calcium on blood pressure in African-American men. A treatment group of 10 men received a calcium supplement for 12 weeks. All subjects had their blood pressure tested before and after the 12-week period.
 
-### Two Different Groups on a Numerical Variable
+### Compare Two Groups for a Numerical Variable
 
-The sample below shows the statistical inference from samples of two different groups (e.g., from two different experiment setup) on a numerical variable:
+The sample below shows the statistical inference on samples from two different groups (e.g., from two different experiment setup) for a numerical variable:
 
 ```java
 Variable variable = new Variable("Decrease");
@@ -239,10 +239,9 @@ In the above codes, the "[calcium.dat](https://github.com/chen0040/java-statisti
 
 The "kie.test4GroupDifference()" can be used to test whether the numerical variable is independent of another categorical variable which has two levels (i.e. the "group" variable)
 
+### Compare Two Groups for a Categorical Variable
 
-### Two Different Groups on a Categorical Variable
-
-The sample below shows the statistical inference from samples of two different groups (e.g., from two different experiment setup) on a categorical variable:
+The sample below shows the statistical inference on samples from two different groups (e.g., from two different experiment setup) for a categorical variable:
 
 ```java
 Variable variable_use = new Variable("UseContraceptive");
@@ -288,7 +287,35 @@ In the above codes, the "[contraception.csv](https://github.com/chen0040/java-st
 
 The "kie.test4GroupDifference('Y')" can be used to test whether the categorical variable is independent of another categorical variable which has two levels (i.e. the "group" variable)
 
-### Test Independence between two Categorical Variables
+### ANOVA: Independence Test for a Numerical variable and a Categorical Variable
+
+The sample code belows show to test for the independence between a categorical variable (explanatory variable) a numerical variable (response variable):
+
+```java
+Variable variable1 = new Variable("Age");
+Variable variable2 = new Variable("LiveChannel");
+
+CategoricalToNumericalSampleKie kie = variable1.multipleGroupNumericalSample(variable2);
+
+InputStream inputStream = FileUtils.getResource("contraception.csv");
+DataFrame dataFrame = DataQuery.csv(",")
+      .from(inputStream)
+      .skipRows(1)
+      .selectColumn(5).asNumeric().asInput("Age")
+      .selectColumn(4).asCategory().asInput("LiveChannel")
+      .build();
+
+kie.addObservations(dataFrame);
+
+Anova test = kie.test4Independence();
+
+System.out.println(test.getSummary());
+```
+
+In the above codes, the "[contraception.csv](https://github.com/chen0040/java-statistical-inference/blob/master/src/test/resources/contraception.csv)" contains results of which channel the person watch (categorical) and what is his/her age (numeric).
+
+
+### Chi-Square: Independence Test for two Categorical Variables
 
 The sample code belows show to test for the independence between two categorical variables
 

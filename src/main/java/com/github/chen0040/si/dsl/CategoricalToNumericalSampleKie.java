@@ -1,6 +1,8 @@
 package com.github.chen0040.si.dsl;
 
 
+import com.github.chen0040.data.frame.DataFrame;
+import com.github.chen0040.data.frame.DataRow;
 import com.github.chen0040.si.statistics.Observation;
 import com.github.chen0040.si.statistics.Sample;
 import com.github.chen0040.si.statistics.SampleDistribution;
@@ -52,4 +54,13 @@ public class CategoricalToNumericalSampleKie {
       }
    }
 
+
+   public void addObservations(DataFrame dataFrame) {
+      for(int i=0; i < dataFrame.rowCount(); ++i){
+         DataRow row = dataFrame.row(i);
+         double value = row.getCell(variable.getName());
+         String groupId = row.getCategoricalCell(groupVariable.getName());
+         addObservation(value, groupId);
+      }
+   }
 }

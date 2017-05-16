@@ -80,7 +80,7 @@ public class Anova {
 
 
 
-   private double significanceLevel = -1;
+   private double significanceLevel = 0.001;
 
    // F = ratio of (between-group-variability) / (within-group-variability)
    private double F;
@@ -104,7 +104,7 @@ public class Anova {
          sampleDistributionByGroupId.put(groupId, sampleDistributionGroup);
       }
 
-      run(sampleDistributionTotal, sampleDistributionByGroupId, -1);
+      run(sampleDistributionTotal, sampleDistributionByGroupId, 0.001);
    }
 
    public Anova() {
@@ -169,11 +169,12 @@ public class Anova {
       if(significanceLevel > 0) {
 
          boolean rejectH0 = pValue < significanceLevel;
-         sb.append("\nIf the significance level is ").append(significanceLevel).append(", the null hypothesis is ").append(rejectH0 ? "rejected as p-value is smaller than that" : "failed to be rejected");
+         sb.append("\nIf the significance level is ").append(significanceLevel).append(":");
+         sb.append("\n\t1) the null hypothesis is ").append(rejectH0 ? "rejected as p-value is smaller than the significance level" : "failed to be rejected");
          if(rejectH0){
-            sb.append("\nIn other words, the categorical variable has no effect on the numerical variable");
+            sb.append("\n\t2) In other words, the categorical variable has no effect on the numerical variable");
          } else {
-            sb.append("\nIn other words, there is a correlation between the categorical variable (explanatory) numerical variable (response)");
+            sb.append("\n\t2) In other words, there is a correlation between the categorical variable (explanatory) numerical variable (response)");
          }
       }
 

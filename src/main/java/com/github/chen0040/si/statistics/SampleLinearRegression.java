@@ -43,6 +43,7 @@ public class SampleLinearRegression {
 
       int sampleSize = sample.size();
 
+
       if(!sample.containsTwoNumericalVariables()) {
          throw new VariableWrongValueTypeException("Sample 1 should contain numeric variable x and y");
       }
@@ -62,6 +63,7 @@ public class SampleLinearRegression {
          Observation o = sample.get(i);
          double x = o.getX();
          double y = o.getY();
+
 
          double x_d = x - xBar;
          double y_d = y - yBar;

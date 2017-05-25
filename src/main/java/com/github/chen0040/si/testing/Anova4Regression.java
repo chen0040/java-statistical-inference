@@ -97,6 +97,11 @@ public class Anova4Regression {
       double significanceLevel = 0.001;
       boolean rejectH0 = pValue < significanceLevel;
       sb.append("\nIf the significance level is ").append(significanceLevel).append(", the null hypothesis is ").append(rejectH0 ? "rejected as p-value is smaller than that" : "failed to be rejected");
+      if(rejectH0){
+         sb.append("\nIn other words, there is linear dependency between x and y");
+      } else {
+         sb.append("\nIn other words, there is no linear dependency between x and y");
+      }
 
 
       return sb.toString();

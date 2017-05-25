@@ -30,7 +30,7 @@ Add the following dependency into your POM file:
 <dependency>
   <groupId>com.github.chen0040</groupId>
   <artifactId>java-statistical-inference</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
 </dependency>
 ```
 
@@ -377,3 +377,45 @@ System.out.println(test.getSummary());
 ```
 
 In the above codes, the "[contraception.csv](https://github.com/chen0040/java-statistical-inference/blob/master/src/test/resources/contraception.csv)" contains results of whether a person watch which live channel (categorical variable) and whether he/she uses contraception (another categorical variable).
+
+
+### Linear dependency between two numerical variables X and Y
+
+The sample code between shows how to analyze the linear dependency between two numerical variable X and Y:
+
+```java
+final Random random = new Random(System.currentTimeMillis());
+
+// regression: y is strongly correlated to x by y = 25 + 5 * x
+Sampler.DataSampleBuilder builder = new Sampler().forColumn("x").generate((name, index) -> (double)index)
+      .forColumn("y").generate((name, index) -> 25 + (index + random.nextDouble()) * 5 + random.nextDouble())
+       .end();
+
+DataFrame dataFrame = DataQuery.blank()
+      .newInput("x")
+      .newOutput("y")
+      .end().build();
+dataFrame = builder.sample(dataFrame, 100);
+
+System.out.println(dataFrame.head(10));
+
+Variable x = new Variable("x");
+XYSampleKie kie = x.regression(new Variable("y"));
+
+kie.addObservations(dataFrame);
+
+SampleLinearRegression model = kie.model();
+
+System.out.println("correlation between x and y: " + model.getCorrelation());
+System.out.println("y-intercept: " + model.getIntercept());
+System.out.println("slope: " + model.getSlope());
+System.out.println("R^2: " + model.getR2()); // explained variability
+System.out.println("SD(X): " + model.getSX());
+System.out.println("SD(Y): " + model.getSY());
+System.out.println("Mean(X): " + model.getXBar());
+System.out.println("Mean(Y): " + model.getYBar());
+
+Anova4Regression anova = kie.test4Independence();
+
+System.out.println(anova.getSummary());
+```

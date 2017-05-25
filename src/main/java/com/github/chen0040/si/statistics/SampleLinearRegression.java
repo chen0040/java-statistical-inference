@@ -1,8 +1,8 @@
 package com.github.chen0040.si.statistics;
 
 
+import com.github.chen0040.data.utils.TupleTwo;
 import com.github.chen0040.si.exceptions.VariableWrongValueTypeException;
-import com.github.chen0040.si.utils.TupleTwo;
 import lombok.Getter;
 import lombok.Setter;
 

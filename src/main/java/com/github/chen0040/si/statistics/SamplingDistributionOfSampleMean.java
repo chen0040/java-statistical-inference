@@ -135,6 +135,21 @@ public class SamplingDistributionOfSampleMean {
       return new ConfidenceInterval(interval, confidenceLevel, sb.toString());
    }
 
+
+   /** return the probability density of the sampling distribution at sample mean = x
+    * @param x the value at which to check the probability density
+    * @return probability density of x
+    */
+   public double probability(double x) {
+      if(distributionFamily == DistributionFamily.Normal) {
+         NormalDistribution distribution = new NormalDistribution(sampleMeanPointEstimate, standardError);
+         return distribution.probability(x);
+      } else {
+         TDistribution distribution = new TDistribution(df);
+         return distribution.probability((x - sampleMeanPointEstimate) / standardError);
+      }
+   }
+
    @Override
    public String toString(){
       StringBuilder sb = new StringBuilder();

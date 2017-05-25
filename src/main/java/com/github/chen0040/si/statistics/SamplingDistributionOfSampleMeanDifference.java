@@ -179,6 +179,20 @@ public class SamplingDistributionOfSampleMeanDifference {
       return distributionFamily;
    }
 
+   /** return the probability density of the sampling distribution at sample mean difference = x
+    * @param x the value at which to check the probability density
+    * @return probability density of x
+    */
+   public double probability(double x) {
+      if(distributionFamily == DistributionFamily.Normal) {
+         NormalDistribution distribution = new NormalDistribution(sampleMean1PointEstimate - sampleMean2PointEstimate, standardError);
+         return distribution.probability(x);
+      } else {
+         TDistribution distribution = new TDistribution(df);
+         return distribution.probability((x - (sampleMean1PointEstimate - sampleMean2PointEstimate)) / standardError);
+      }
+   }
+
    @Override
    public String toString(){
       StringBuilder sb = new StringBuilder();

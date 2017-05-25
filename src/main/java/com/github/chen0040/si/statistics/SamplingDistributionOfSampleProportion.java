@@ -7,6 +7,7 @@ import com.github.chen0040.si.misc.Simulation;
 import com.github.chen0040.si.utils.Count;
 import com.github.chen0040.si.utils.Interval;
 import org.apache.commons.math3.distribution.NormalDistribution;
+import org.apache.commons.math3.distribution.TDistribution;
 import org.apache.commons.math3.exception.OutOfRangeException;
 import com.github.chen0040.data.exceptions.NotImplementedException;
 
@@ -138,6 +139,21 @@ public class SamplingDistributionOfSampleProportion {
       sb.append(interval);
 
       return new ConfidenceInterval(interval, confidenceLevel, sb.toString());
+   }
+
+   /** return the probability density of the sampling distribution at sample proportion = p
+    * @param p the value at which to check the probability density
+    * @return probability density of p
+    */
+   public double probability(double p) {
+      if(distributionFamily == DistributionFamily.Normal) {
+         NormalDistribution distribution = new NormalDistribution(sampleProportionPointEstimate, standardError);
+         return distribution.probability(p);
+      } else {
+         List<Double> proportions = Simulation.binomial(p, sampleSize, simulationCount * 10);
+
+         return (double)proportions.stream().filter(p1 -> p1 <= p + 0.005 && p1 >= p - 0.005).count() / proportions.size();
+      }
    }
 
    @Override
